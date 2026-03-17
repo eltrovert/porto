@@ -10,6 +10,27 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// Importer handles content import operations
+type Importer struct {
+	store *Store
+}
+
+// NewImporter creates a new importer instance
+func NewImporter(store *Store) *Importer {
+	return &Importer{store: store}
+}
+
+// ImportFromDirectory imports all content from a directory
+func (i *Importer) ImportFromDirectory(path string) error {
+	stats, err := ImportFromDirectory(i.store, path)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Successfully imported %d posts and %d projects\n", stats.PostsImported, stats.ProjectsImported)
+	return nil
+}
+
 // ImportStats tracks the results of an import operation
 type ImportStats struct {
 	PostsImported    int

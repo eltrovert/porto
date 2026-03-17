@@ -1,0 +1,51 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+
+templ About() {
+	@layouts.Page("About", "about") {
+		<div class="text-center mb-16 animate-on-scroll">
+			<h1 class="text-5xl font-bold mb-8 font-mono">
+				<span class="text-accent">&gt;_</span> whoami
+				<span class="animate-pulse text-accent ml-2">_</span>
+			</h1>
+		</div>
+
+		<div class="max-w-4xl mx-auto">
+			<div class="card p-8 animate-on-scroll">
+				<div class="mb-6">
+					<h2 class="text-2xl font-bold mb-4 text-accent font-mono">El Muhammad</h2>
+					<p class="text-gray-300 text-lg leading-relaxed">
+						Senior DevOps & Cloud Architect with 13+ years of global experience in building scalable infrastructure,
+						automation systems, and cloud-native solutions. Currently passionate about building a personal cloud infrastructure
+						at home and exploring the intersection of DevOps and machine learning operations.
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+					<div>
+						<h3 class="text-lg font-bold text-accent font-mono mb-4">Expertise</h3>
+						<ul class="space-y-2 text-gray-400">
+							<li>• Kubernetes & Cloud-Native Ecosystems</li>
+							<li>• MLOps & Distributed Training</li>
+							<li>• CI/CD Pipelines & GitOps</li>
+							<li>• Cloud Migration & Cost Optimization</li>
+							<li>• Infrastructure as Code</li>
+							<li>• Observability & Monitoring</li>
+						</ul>
+					</div>
+
+					<div>
+						<h3 class="text-lg font-bold text-accent font-mono mb-4">Currently</h3>
+						<ul class="space-y-2 text-gray-400">
+							<li>• Building personal homelab infrastructure</li>
+							<li>• Exploring edge computing solutions</li>
+							<li>• Contributing to open source projects</li>
+							<li>• Writing about DevOps best practices</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}

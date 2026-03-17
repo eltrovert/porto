@@ -1,0 +1,181 @@
+package components
+
+func getNavClass(nav, activeNav string) string {
+	if nav == activeNav {
+		return "text-accent font-bold"
+	}
+	return "text-gray-400 hover:text-white transition-colors"
+}
+
+templ Navbar(activeNav string) {
+	<!-- Glassmorphism Navbar -->
+	<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-4 transition-transform duration-300" id="main-navbar">
+		<div class="navbar-glass backdrop-blur px-6 py-3 flex items-center space-x-6 relative group">
+			<!-- Brand -->
+			<div class="flex items-center space-x-2">
+				<span class="font-bold text-white font-mono">eltrovert.com</span>
+				<span class="animate-pulse text-accent ml-1 font-mono">_</span>
+			</div>
+
+			<!-- Navigation Links -->
+			<div class="hidden md:flex items-center space-x-6">
+				<a href="/" class={ getNavClass("home", activeNav) } hx-get="/" hx-target="body" hx-push-url="true">
+					Home
+				</a>
+				<a href="/projects" class={ getNavClass("projects", activeNav) } hx-get="/projects" hx-target="body" hx-push-url="true">
+					Projects
+				</a>
+				<a href="/posts" class={ getNavClass("posts", activeNav) } hx-get="/posts" hx-target="body" hx-push-url="true">
+					Posts
+				</a>
+
+				<!-- More Dropdown -->
+				<div class="relative group/more">
+					<button class="text-gray-400 hover:text-white transition-colors flex items-center space-x-1">
+						<span>More</span>
+						<svg class="w-4 h-4 transition-transform group-hover/more:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+						</svg>
+					</button>
+
+					<!-- Mega Menu -->
+					<div class="mega-menu group-hover/more:opacity-100 group-hover/more:visible">
+						<div class="mega-menu-content">
+							<!-- Column 1: About & Personal -->
+							<div class="space-y-4">
+								<h4 class="text-accent font-bold font-mono text-sm">About</h4>
+								<div class="space-y-2">
+									<a href="/about" class={ getNavClass("about", activeNav) } hx-get="/about" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										About Me
+									</a>
+									<a href="/talks" class={ getNavClass("talks", activeNav) } hx-get="/talks" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Talks
+									</a>
+									<a href="/uses" class={ getNavClass("uses", activeNav) } hx-get="/uses" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Uses
+									</a>
+									<a href="/life" class={ getNavClass("life", activeNav) } hx-get="/life" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Life
+									</a>
+								</div>
+							</div>
+
+							<!-- Column 2: Content -->
+							<div class="space-y-4">
+								<h4 class="text-accent font-bold font-mono text-sm">Content</h4>
+								<div class="space-y-2">
+									<a href="/books" class={ getNavClass("books", activeNav) } hx-get="/books" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Books
+									</a>
+									<a href="/notes" class={ getNavClass("notes", activeNav) } hx-get="/notes" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Notes
+									</a>
+									<a href="/guestbook" class={ getNavClass("guestbook", activeNav) } hx-get="/guestbook" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Guestbook
+									</a>
+									<a href="/kudos" class={ getNavClass("kudos", activeNav) } hx-get="/kudos" hx-target="body" hx-push-url="true" class="block text-gray-400 hover:text-white transition-colors">
+										Kudos
+									</a>
+								</div>
+							</div>
+
+							<!-- Column 3: External Links -->
+							<div class="space-y-4">
+								<h4 class="text-accent font-bold font-mono text-sm">Connect</h4>
+								<div class="space-y-2">
+									<a href="https://github.com/eltrovert" target="_blank" rel="noopener noreferrer" class="block text-gray-400 hover:text-white transition-colors">
+										GitHub
+									</a>
+									<a href="https://linkedin.com/in/eltrovert" target="_blank" rel="noopener noreferrer" class="block text-gray-400 hover:text-white transition-colors">
+										LinkedIn
+									</a>
+									<a href="https://twitter.com/eltrovert" target="_blank" rel="noopener noreferrer" class="block text-gray-400 hover:text-white transition-colors">
+										Twitter
+									</a>
+									<a href="/rss.xml" target="_blank" class="block text-gray-400 hover:text-white transition-colors">
+										RSS Feed
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Mobile Menu Button -->
+			<div class="md:hidden">
+				<button
+					class="text-gray-400 hover:text-white transition-colors"
+					onclick="toggleMobileMenu()"
+					id="mobile-menu-button"
+				>
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Mobile Menu -->
+		<div class="hidden md:hidden absolute top-full left-4 right-4 mt-2" id="mobile-menu">
+			<div class="navbar-glass backdrop-blur p-6 space-y-4">
+				<a href="/" class={ getNavClass("home", activeNav) } hx-get="/" hx-target="body" hx-push-url="true" class="block">
+					Home
+				</a>
+				<a href="/projects" class={ getNavClass("projects", activeNav) } hx-get="/projects" hx-target="body" hx-push-url="true" class="block">
+					Projects
+				</a>
+				<a href="/posts" class={ getNavClass("posts", activeNav) } hx-get="/posts" hx-target="body" hx-push-url="true" class="block">
+					Posts
+				</a>
+				<a href="/about" class={ getNavClass("about", activeNav) } hx-get="/about" hx-target="body" hx-push-url="true" class="block">
+					About
+				</a>
+				<a href="/talks" class={ getNavClass("talks", activeNav) } hx-get="/talks" hx-target="body" hx-push-url="true" class="block">
+					Talks
+				</a>
+				<a href="/uses" class={ getNavClass("uses", activeNav) } hx-get="/uses" hx-target="body" hx-push-url="true" class="block">
+					Uses
+				</a>
+				<a href="/books" class={ getNavClass("books", activeNav) } hx-get="/books" hx-target="body" hx-push-url="true" class="block">
+					Books
+				</a>
+				<a href="/life" class={ getNavClass("life", activeNav) } hx-get="/life" hx-target="body" hx-push-url="true" class="block">
+					Life
+				</a>
+				<a href="/notes" class={ getNavClass("notes", activeNav) } hx-get="/notes" hx-target="body" hx-push-url="true" class="block">
+					Notes
+				</a>
+				<a href="/guestbook" class={ getNavClass("guestbook", activeNav) } hx-get="/guestbook" hx-target="body" hx-push-url="true" class="block">
+					Guestbook
+				</a>
+				<a href="/kudos" class={ getNavClass("kudos", activeNav) } hx-get="/kudos" hx-target="body" hx-push-url="true" class="block">
+					Kudos
+				</a>
+			</div>
+		</div>
+	</nav>
+
+	<script>
+		function toggleMobileMenu() {
+			const menu = document.getElementById('mobile-menu');
+			const button = document.getElementById('mobile-menu-button');
+
+			if (menu.classList.contains('hidden')) {
+				menu.classList.remove('hidden');
+				button.innerHTML = `
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				`;
+			} else {
+				menu.classList.add('hidden');
+				button.innerHTML = `
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+					</svg>
+				`;
+			}
+		}
+	</script>
+}

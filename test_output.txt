@@ -1,0 +1,213 @@
+=== RUN   TestModels_PostStruct
+--- PASS: TestModels_PostStruct (0.00s)
+=== RUN   TestModels_ProjectStruct
+--- PASS: TestModels_ProjectStruct (0.00s)
+=== RUN   TestModels_TalkStruct
+--- PASS: TestModels_TalkStruct (0.00s)
+=== RUN   TestModels_BookStruct
+--- PASS: TestModels_BookStruct (0.00s)
+=== RUN   TestModels_NoteStruct
+--- PASS: TestModels_NoteStruct (0.00s)
+=== RUN   TestModels_GuestEntryStruct
+--- PASS: TestModels_GuestEntryStruct (0.00s)
+=== RUN   TestModels_CommentStruct
+--- PASS: TestModels_CommentStruct (0.00s)
+=== RUN   TestModels_UsesItemStruct
+--- PASS: TestModels_UsesItemStruct (0.00s)
+=== RUN   TestDB_CreateStore
+--- PASS: TestDB_CreateStore (0.03s)
+=== RUN   TestDB_TablesExist
+--- PASS: TestDB_TablesExist (0.01s)
+=== RUN   TestDB_IndexesExist
+--- PASS: TestDB_IndexesExist (0.01s)
+=== RUN   TestCRUD_CreateAndGetPost
+--- PASS: TestCRUD_CreateAndGetPost (0.01s)
+=== RUN   TestCRUD_ListPosts
+--- PASS: TestCRUD_ListPosts (0.01s)
+=== RUN   TestCRUD_ListPostsPagination
+--- PASS: TestCRUD_ListPostsPagination (0.01s)
+=== RUN   TestCRUD_SearchPosts
+--- PASS: TestCRUD_SearchPosts (0.01s)
+=== RUN   TestCRUD_FilterPostsByTopic
+--- PASS: TestCRUD_FilterPostsByTopic (0.01s)
+=== RUN   TestCRUD_CreateAndGetProject
+--- PASS: TestCRUD_CreateAndGetProject (0.01s)
+=== RUN   TestCRUD_ListProjects
+--- PASS: TestCRUD_ListProjects (0.01s)
+=== RUN   TestCRUD_CreateAndListTalks
+--- PASS: TestCRUD_CreateAndListTalks (0.01s)
+=== RUN   TestCRUD_FilterTalksByType
+--- PASS: TestCRUD_FilterTalksByType (0.01s)
+=== RUN   TestCRUD_CreateAndListBooks
+--- PASS: TestCRUD_CreateAndListBooks (0.01s)
+=== RUN   TestCRUD_CreateAndListNotes
+--- PASS: TestCRUD_CreateAndListNotes (0.01s)
+=== RUN   TestCRUD_CreateAndListGuestEntries
+--- PASS: TestCRUD_CreateAndListGuestEntries (0.01s)
+=== RUN   TestCRUD_CreateAndListComments
+--- PASS: TestCRUD_CreateAndListComments (0.01s)
+=== RUN   TestCRUD_CreateAndListUsesItems
+--- PASS: TestCRUD_CreateAndListUsesItems (0.01s)
+=== RUN   TestCRUD_IncrementPostViews
+--- PASS: TestCRUD_IncrementPostViews (0.01s)
+=== RUN   TestCRUD_IncrementPostLikes
+--- PASS: TestCRUD_IncrementPostLikes (0.01s)
+=== RUN   TestCRUD_GetTopics
+--- PASS: TestCRUD_GetTopics (0.01s)
+=== RUN   TestCRUD_PostNotFound
+--- PASS: TestCRUD_PostNotFound (0.01s)
+=== RUN   TestCRUD_DuplicateSlug
+--- PASS: TestCRUD_DuplicateSlug (0.01s)
+=== RUN   TestMarkdown_BasicRendering
+--- PASS: TestMarkdown_BasicRendering (0.00s)
+=== RUN   TestMarkdown_CodeBlock
+--- PASS: TestMarkdown_CodeBlock (0.00s)
+=== RUN   TestMarkdown_SyntaxHighlighting
+--- PASS: TestMarkdown_SyntaxHighlighting (0.00s)
+=== RUN   TestMarkdown_MermaidBlock
+--- PASS: TestMarkdown_MermaidBlock (0.00s)
+=== RUN   TestMarkdown_Tables
+--- PASS: TestMarkdown_Tables (0.00s)
+=== RUN   TestMarkdown_Links
+--- PASS: TestMarkdown_Links (0.00s)
+=== RUN   TestMarkdown_Images
+--- PASS: TestMarkdown_Images (0.00s)
+=== RUN   TestMarkdown_ReadTimeCalculation
+--- PASS: TestMarkdown_ReadTimeCalculation (0.00s)
+=== RUN   TestImporter_ParseFrontmatter
+--- PASS: TestImporter_ParseFrontmatter (0.00s)
+=== RUN   TestImporter_ParseFrontmatterWithMermaid
+--- PASS: TestImporter_ParseFrontmatterWithMermaid (0.00s)
+=== RUN   TestImporter_ParseAstroProject
+--- PASS: TestImporter_ParseAstroProject (0.00s)
+=== RUN   TestImporter_ImportFromDirectory
+--- PASS: TestImporter_ImportFromDirectory (0.07s)
+=== RUN   TestRoute_Home
+--- PASS: TestRoute_Home (0.01s)
+=== RUN   TestRoute_About
+--- PASS: TestRoute_About (0.01s)
+=== RUN   TestRoute_Projects
+--- PASS: TestRoute_Projects (0.01s)
+=== RUN   TestRoute_ProjectDetail
+--- PASS: TestRoute_ProjectDetail (0.01s)
+=== RUN   TestRoute_ProjectNotFound
+--- PASS: TestRoute_ProjectNotFound (0.01s)
+=== RUN   TestRoute_Posts
+--- PASS: TestRoute_Posts (0.01s)
+=== RUN   TestRoute_PostDetail
+--- PASS: TestRoute_PostDetail (0.01s)
+=== RUN   TestRoute_PostNotFound
+--- PASS: TestRoute_PostNotFound (0.01s)
+=== RUN   TestRoute_Talks
+--- PASS: TestRoute_Talks (0.01s)
+=== RUN   TestRoute_Uses
+--- PASS: TestRoute_Uses (0.01s)
+=== RUN   TestRoute_Books
+--- PASS: TestRoute_Books (0.01s)
+=== RUN   TestRoute_Life
+--- PASS: TestRoute_Life (0.01s)
+=== RUN   TestRoute_Notes
+--- PASS: TestRoute_Notes (0.01s)
+=== RUN   TestRoute_Guestbook
+--- PASS: TestRoute_Guestbook (0.01s)
+=== RUN   TestRoute_Kudos
+--- PASS: TestRoute_Kudos (0.01s)
+=== RUN   TestRoute_404
+--- PASS: TestRoute_404 (0.01s)
+=== RUN   TestRoute_StaticFiles
+--- PASS: TestRoute_StaticFiles (0.01s)
+=== RUN   TestContent_HomeHasHero
+--- PASS: TestContent_HomeHasHero (0.01s)
+=== RUN   TestContent_HomeHasNavbar
+--- PASS: TestContent_HomeHasNavbar (0.01s)
+=== RUN   TestContent_HomeHasCosmicBackground
+--- PASS: TestContent_HomeHasCosmicBackground (0.01s)
+=== RUN   TestContent_HomeHasBlogPosts
+--- PASS: TestContent_HomeHasBlogPosts (0.01s)
+=== RUN   TestContent_PostsPageHasPosts
+--- PASS: TestContent_PostsPageHasPosts (0.01s)
+=== RUN   TestContent_PostDetailHasContent
+--- PASS: TestContent_PostDetailHasContent (0.01s)
+=== RUN   TestContent_PostDetailHasTOC
+    ralph_test.go:1095: Warning: Post detail should ideally have TOC section
+--- PASS: TestContent_PostDetailHasTOC (0.01s)
+=== RUN   TestContent_ProjectsPageHasProjects
+--- PASS: TestContent_ProjectsPageHasProjects (0.01s)
+=== RUN   TestContent_AboutPageHasIdentity
+--- PASS: TestContent_AboutPageHasIdentity (0.02s)
+=== RUN   TestContent_TalksPageHasTalks
+--- PASS: TestContent_TalksPageHasTalks (0.01s)
+=== RUN   TestContent_BooksPageHasBooks
+--- PASS: TestContent_BooksPageHasBooks (0.01s)
+=== RUN   TestContent_NotesPageHasNotes
+--- PASS: TestContent_NotesPageHasNotes (0.01s)
+=== RUN   TestContent_GuestbookHasEntries
+--- PASS: TestContent_GuestbookHasEntries (0.01s)
+=== RUN   TestHTMX_PostsSearch
+--- PASS: TestHTMX_PostsSearch (0.01s)
+=== RUN   TestHTMX_PostsFilterByTopic
+--- PASS: TestHTMX_PostsFilterByTopic (0.01s)
+=== RUN   TestHTMX_TalksFilter
+--- PASS: TestHTMX_TalksFilter (0.01s)
+=== RUN   TestForm_GuestbookSubmit
+--- PASS: TestForm_GuestbookSubmit (0.01s)
+=== RUN   TestForm_PostComment
+--- PASS: TestForm_PostComment (0.01s)
+=== RUN   TestForm_PostLike
+--- PASS: TestForm_PostLike (0.01s)
+=== RUN   TestDesign_AccentColor
+--- PASS: TestDesign_AccentColor (0.01s)
+=== RUN   TestDesign_FontMono
+--- PASS: TestDesign_FontMono (0.01s)
+=== RUN   TestDesign_DarkBackground
+--- PASS: TestDesign_DarkBackground (0.01s)
+=== RUN   TestDesign_GlassmorphismNavbar
+--- PASS: TestDesign_GlassmorphismNavbar (0.01s)
+=== RUN   TestDesign_TerminalPrefix
+--- PASS: TestDesign_TerminalPrefix (0.02s)
+=== RUN   TestDesign_BlinkingCursor
+--- PASS: TestDesign_BlinkingCursor (0.01s)
+=== RUN   TestDesign_MouseFollowerJS
+--- PASS: TestDesign_MouseFollowerJS (0.01s)
+=== RUN   TestDesign_HTMXIncluded
+--- PASS: TestDesign_HTMXIncluded (0.01s)
+=== RUN   TestDesign_PostsPageTerminalHeader
+--- PASS: TestDesign_PostsPageTerminalHeader (0.01s)
+=== RUN   TestDesign_GuestbookTerminalHeader
+--- PASS: TestDesign_GuestbookTerminalHeader (0.01s)
+=== RUN   TestDesign_NotesTerminalHeader
+--- PASS: TestDesign_NotesTerminalHeader (0.01s)
+=== RUN   TestDesign_BooksTerminalHeader
+--- PASS: TestDesign_BooksTerminalHeader (0.01s)
+=== RUN   TestDesign_AboutTerminalHeader
+--- PASS: TestDesign_AboutTerminalHeader (0.01s)
+=== RUN   TestDesign_UsesTerminalHeader
+--- PASS: TestDesign_UsesTerminalHeader (0.01s)
+=== RUN   TestDesign_TalksTerminalHeader
+--- PASS: TestDesign_TalksTerminalHeader (0.01s)
+=== RUN   TestDesign_ProjectsTerminalHeader
+--- PASS: TestDesign_ProjectsTerminalHeader (0.01s)
+=== RUN   TestDesign_LifeTerminalHeader
+--- PASS: TestDesign_LifeTerminalHeader (0.01s)
+=== RUN   TestDesign_KudosTerminalHeader
+--- PASS: TestDesign_KudosTerminalHeader (0.01s)
+=== RUN   TestDesign_FooterHasTerminalSubscribe
+--- PASS: TestDesign_FooterHasTerminalSubscribe (0.01s)
+=== RUN   TestDesign_FooterHasSystemStats
+--- PASS: TestDesign_FooterHasSystemStats (0.01s)
+=== RUN   TestRSS_ValidXML
+--- PASS: TestRSS_ValidXML (0.01s)
+=== RUN   TestRSS_ContainsPosts
+--- PASS: TestRSS_ContainsPosts (0.01s)
+=== RUN   TestSitemap_ValidXML
+--- PASS: TestSitemap_ValidXML (0.01s)
+=== RUN   TestSitemap_ContainsAllPages
+--- PASS: TestSitemap_ContainsAllPages (0.01s)
+=== RUN   TestMiddleware_GzipSupport
+--- PASS: TestMiddleware_GzipSupport (0.01s)
+=== RUN   TestMiddleware_ContentType
+--- PASS: TestMiddleware_ContentType (0.01s)
+=== RUN   TestMiddleware_RSSContentType
+--- PASS: TestMiddleware_RSSContentType (0.01s)
+PASS
+ok  	github.com/eltrovert/porto	1.196s

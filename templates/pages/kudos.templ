@@ -1,0 +1,173 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+
+templ Kudos() {
+	@layouts.Base("Kudos", "kudos") {
+		<div class="pt-32 min-h-screen">
+			<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Page Header -->
+				<section class="mb-16 text-center animate-on-scroll">
+					<h1 class="text-5xl md:text-6xl font-bold text-white mb-6 font-mono">
+						<span class="text-accent">&gt;_</span> dependencies
+						<span class="animate-pulse text-accent ml-2">_</span>
+					</h1>
+					<p class="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+						Gratitude and recognition for the people, projects, and communities that made this journey possible.
+					</p>
+				</section>
+
+				<!-- Kudos Sections -->
+				<section class="space-y-12">
+					<!-- Open Source Heroes -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Open Source Heroes
+						</h2>
+						<p class="text-gray-400 mb-6">
+							The unsung heroes who build the tools and libraries that power modern infrastructure.
+						</p>
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+							<div class="text-center space-y-3">
+								<div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+									<span class="text-accent font-mono font-bold">K8s</span>
+								</div>
+								<h3 class="text-lg font-bold text-white">Kubernetes Contributors</h3>
+								<p class="text-gray-400 text-sm">For revolutionizing container orchestration and making cloud-native possible.</p>
+							</div>
+							<div class="text-center space-y-3">
+								<div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+									<span class="text-accent font-mono font-bold">Go</span>
+								</div>
+								<h3 class="text-lg font-bold text-white">Go Team</h3>
+								<p class="text-gray-400 text-sm">For creating a language that makes building reliable systems a joy.</p>
+							</div>
+							<div class="text-center space-y-3">
+								<div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+									<span class="text-accent font-mono font-bold">TF</span>
+								</div>
+								<h3 class="text-lg font-bold text-white">Terraform Maintainers</h3>
+								<p class="text-gray-400 text-sm">For bringing Infrastructure as Code to the masses with elegance.</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Mentors & Colleagues -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Mentors & Colleagues
+						</h2>
+						<div class="space-y-6 text-gray-300 leading-relaxed">
+							<p>
+								To the senior engineers who took time to teach, the junior developers who asked challenging questions,
+								and the product managers who helped translate technical complexity into business value.
+							</p>
+							<p>
+								Special appreciation to the teams at various companies who trusted me with critical infrastructure
+								and gave me the freedom to innovate and learn from failures.
+							</p>
+						</div>
+					</div>
+
+					<!-- Communities -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Communities
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+							<div>
+								<h3 class="text-xl font-bold text-white mb-4">Tech Communities</h3>
+								<ul class="space-y-2 text-gray-300">
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Cloud Native Computing Foundation
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> DevOps Indonesia Community
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Gophers Worldwide
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Platform Engineering Community
+									</li>
+								</ul>
+							</div>
+							<div>
+								<h3 class="text-xl font-bold text-white mb-4">Learning Platforms</h3>
+								<ul class="space-y-2 text-gray-300">
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Stack Overflow contributors
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> YouTube educators
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Medium & Dev.to writers
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Conference speakers worldwide
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<!-- Tools & Services -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Tools That Power This Site
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+							<div class="space-y-3">
+								<h3 class="text-lg font-bold text-white">Backend</h3>
+								<ul class="space-y-1 text-gray-400 text-sm">
+									<li>• Go programming language</li>
+									<li>• Templ for HTML templates</li>
+									<li>• SQLite for data storage</li>
+								</ul>
+							</div>
+							<div class="space-y-3">
+								<h3 class="text-lg font-bold text-white">Frontend</h3>
+								<ul class="space-y-1 text-gray-400 text-sm">
+									<li>• HTMX for interactivity</li>
+									<li>• Tailwind CSS for styling</li>
+									<li>• Custom CSS animations</li>
+								</ul>
+							</div>
+							<div class="space-y-3">
+								<h3 class="text-lg font-bold text-white">Infrastructure</h3>
+								<ul class="space-y-1 text-gray-400 text-sm">
+									<li>• Docker for containerization</li>
+									<li>• GitHub for version control</li>
+									<li>• Cloud hosting (details in uses)</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<!-- Personal Thanks -->
+					<div class="card p-8 animate-on-scroll text-center">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Personal Thanks
+						</h2>
+						<div class="max-w-3xl mx-auto space-y-4 text-gray-300 leading-relaxed">
+							<p>
+								To my family for supporting the long nights spent learning and building.
+								To friends who listened to technical rambling and provided perspective beyond technology.
+							</p>
+							<p>
+								To everyone who reads this blog, uses the code, or engages in conversations about technology.
+								Your feedback and curiosity make the effort worthwhile.
+							</p>
+						</div>
+						<div class="mt-8">
+							<a href="/guestbook" hx-get="/guestbook" hx-target="body" hx-push-url="true" class="btn-primary">
+								Leave Your Mark
+							</a>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	}
+}

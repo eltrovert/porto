@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark text-white font-sans cursor-none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-accent/30 text-dark;
+  }
+
+  /* Hide scrollbars but keep functionality */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Component styles */
+@layer components {
+  /* Glassmorphism navbar */
+  .navbar-glass {
+    @apply bg-darker/90 backdrop-blur-xl border border-white/10 rounded-lg;
+  }
+
+  /* Card styles with hover effects */
+  .card {
+    @apply bg-darker/60 border border-white/10 rounded-lg p-6 transition-all duration-300 hover:border-accent/20;
+  }
+
+  .card:hover {
+    @apply -translate-y-1 shadow-lg shadow-accent/5;
+  }
+
+  /* Progress bar hover effect */
+  .card::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-0.5 w-0 bg-accent transition-all duration-300;
+  }
+
+  .card:hover::after {
+    @apply w-full;
+  }
+
+  /* Corner accents */
+  .corner-accent {
+    @apply relative;
+  }
+
+  .corner-accent::before,
+  .corner-accent::after {
+    content: '';
+    @apply absolute w-3 h-3 border-accent;
+  }
+
+  .corner-accent::before {
+    @apply top-0 left-0 border-l border-t;
+  }
+
+  .corner-accent::after {
+    @apply bottom-0 right-0 border-r border-b;
+  }
+
+  /* Terminal styling */
+  .terminal-prefix {
+    @apply text-accent font-mono;
+  }
+
+  .terminal-cursor {
+    @apply animate-pulse text-accent;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply bg-accent text-dark font-bold px-6 py-3 rounded transition-colors hover:bg-accent/80;
+  }
+
+  .btn-secondary {
+    @apply border border-white/20 text-white px-6 py-3 rounded transition-colors hover:border-accent hover:text-accent;
+  }
+
+  /* Input styles */
+  .input-field {
+    @apply bg-darker border border-white/10 rounded px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-accent;
+  }
+
+  /* Visual container with scan effect */
+  .visual-container {
+    @apply relative overflow-hidden;
+  }
+
+  .visual-container::before {
+    content: '';
+    @apply absolute inset-0 opacity-20 bg-gradient-to-r from-transparent via-accent to-transparent w-32 -translate-x-full;
+    animation: scan 2s ease-in-out infinite;
+  }
+
+  /* Cosmic background elements */
+  .cosmic-bg {
+    @apply relative overflow-hidden;
+  }
+
+  .cosmic-bg::before {
+    content: '';
+    @apply absolute inset-0 opacity-30;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(255, 207, 13, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
+  }
+
+  /* Stardust overlay */
+  .cosmic-bg::after {
+    content: '';
+    @apply absolute inset-0 opacity-10;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 40% 70%, #fff, transparent),
+      radial-gradient(1px 1px at 90% 40%, #fff, transparent),
+      radial-gradient(1px 1px at 60% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 80% 90%, #fff, transparent);
+    background-size: 50px 50px, 30px 30px, 40px 40px, 60px 60px, 35px 35px;
+  }
+
+  /* Orbital tracks */
+  .orbital-track {
+    @apply absolute border border-white/5 rounded-full;
+  }
+
+  /* Window controls */
+  .window-controls {
+    @apply flex gap-2 mb-4;
+  }
+
+  .window-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+
+  .window-dot-red {
+    @apply bg-red-500;
+  }
+
+  .window-dot-yellow {
+    @apply bg-yellow-500;
+  }
+
+  .window-dot-green {
+    @apply bg-green-500;
+  }
+
+  /* Mega menu styles */
+  .mega-menu {
+    @apply absolute top-full left-0 right-0 mt-2 opacity-0 invisible transition-all duration-300;
+  }
+
+  .mega-menu.active {
+    @apply opacity-100 visible;
+  }
+
+  .mega-menu-content {
+    @apply bg-darker/95 backdrop-blur-xl border border-white/10 rounded-lg p-8 grid grid-cols-3 gap-8 max-w-6xl mx-auto;
+  }
+}
+
+/* Utility styles */
+@layer utilities {
+  /* Animation classes for scroll triggers */
+  .animate-in {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .animate-out {
+    @apply opacity-0 translate-y-8;
+  }
+
+  /* Text gradients */
+  .text-gradient {
+    @apply bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-accent to-yellow-300 bg-clip-text text-transparent;
+  }
+
+  /* Glow effects */
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(255, 207, 13, 0.3);
+  }
+
+  /* Custom scrollbar for specific elements */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-darker rounded;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-white/20 rounded hover:bg-white/30;
+  }
+
+  /* Masonry grid */
+  .masonry {
+    column-count: auto;
+    column-width: 300px;
+    column-gap: 1.5rem;
+  }
+
+  .masonry-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+  }
+}
+
+/* Mouse follower */
+.mouse-follower {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: #ffcf0d;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.mouse-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 207, 13, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.15s ease;
+}
+
+/* View Transitions API support */
+@supports (view-transition-name: none) {
+  .view-transition-fade {
+    view-transition-name: fade-transition;
+  }
+}
+
+/* HTMX loading states */
+.htmx-indicator {
+  @apply opacity-0 transition-opacity duration-300;
+}
+
+.htmx-request .htmx-indicator {
+  @apply opacity-100;
+}
+
+.htmx-request.htmx-indicator {
+  @apply opacity-100;
+}
+
+/* Code syntax highlighting base styles */
+pre {
+  @apply bg-darkest border border-white/10 rounded-lg p-4 overflow-x-auto;
+}
+
+code {
+  @apply font-mono text-sm;
+}
+
+/* Additional animation utilities */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.animate-fade-in-up-delay {
+  animation: fadeInUp 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.animate-fade-in-up-delay-2 {
+  animation: fadeInUp 0.6s ease-out 0.4s forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}

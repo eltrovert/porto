@@ -1,0 +1,64 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+import "github.com/eltrovert/porto/internal/content"
+
+templ Posts(posts []*content.Post) {
+	@layouts.Page("Posts", "posts") {
+		<div class="text-center mb-16 animate-on-scroll">
+			<h1 class="text-5xl font-bold mb-8 font-mono">
+				<span class="text-accent">&gt;_</span> my_writing.md
+				<span class="animate-pulse text-accent ml-2">_</span>
+			</h1>
+		</div>
+
+		<div class="space-y-6">
+			if len(posts) == 0 {
+				<div class="text-center py-12">
+					<p class="text-gray-400 text-lg">No posts found. Check back soon!</p>
+				</div>
+			} else {
+				for _, post := range posts {
+					<div class="card p-6 animate-on-scroll stagger-item">
+						<div class="mb-4">
+							<div class="text-accent font-mono text-sm mb-2">{ post.DateFormatted }</div>
+							if post.Topic != "" {
+								<span class="bg-accent/10 text-accent px-2 py-1 rounded text-xs font-mono">{ post.Topic }</span>
+							}
+						</div>
+
+						<h2 class="text-xl font-bold text-white mb-3 hover:text-accent transition-colors">
+							<a href={ templ.SafeURL("/posts/" + post.Slug) } hx-get={ "/posts/" + post.Slug } hx-target="body" hx-push-url="true">
+								{ post.Title }
+							</a>
+						</h2>
+
+						if post.Description != "" {
+							<p class="text-gray-400 mb-4">{ post.Description }</p>
+						}
+
+						<div class="flex items-center justify-between">
+							<a
+								href={ templ.SafeURL("/posts/" + post.Slug) }
+								hx-get={ "/posts/" + post.Slug }
+								hx-target="body"
+								hx-push-url="true"
+								class="text-accent hover:text-white font-mono text-sm transition-colors"
+							>
+								Read more →
+							</a>
+
+							<div class="flex items-center space-x-4 text-gray-500 text-sm font-mono">
+								if post.ReadTime != "" {
+									<span>{ post.ReadTime }</span>
+								}
+								<span>{ post.Views } views</span>
+								<span>{ post.Likes } likes</span>
+							</div>
+						</div>
+					</div>
+				}
+			}
+		</div>
+	}
+}

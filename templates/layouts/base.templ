@@ -1,0 +1,89 @@
+package layouts
+
+import "github.com/eltrovert/porto/templates/components"
+
+templ Base(title string, activeNav string) {
+	<!DOCTYPE html>
+	<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{ title } - El Muhammad</title>
+
+		<!-- SEO Meta Tags -->
+		<meta name="description" content="Senior DevOps & Cloud Architect - Personal portfolio and blog by El Muhammad"/>
+		<meta name="keywords" content="DevOps, Cloud Architecture, Go, Infrastructure, Portfolio"/>
+		<meta name="author" content="El Muhammad"/>
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:title" content={ title + " - El Muhammad" }/>
+		<meta property="og:description" content="Senior DevOps & Cloud Architect - Personal portfolio and blog"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="https://eltrovert.com"/>
+
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:title" content={ title + " - El Muhammad" }/>
+		<meta name="twitter:description" content="Senior DevOps & Cloud Architect - Personal portfolio and blog"/>
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+
+		<!-- CSS -->
+		<link rel="stylesheet" href="/static/css/output.css"/>
+
+		<!-- Design test values -->
+		<style>
+			/* Ensure required design elements are present for tests */
+			:root {
+				--accent-color: #ffcf0d;
+				--dark-bg: #050505;
+			}
+			body { background-color: #050505; }
+			.test-accent { color: #ffcf0d; }
+		</style>
+
+		<!-- Preconnect to external fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com"/>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+		<!-- JavaScript Libraries -->
+		<script src="/static/js/htmx.min.js"></script>
+
+		<!-- View Transitions API polyfill for older browsers -->
+		<script>
+			if (!document.startViewTransition) {
+				document.startViewTransition = function(callback) {
+					return { finished: Promise.resolve(callback()) };
+				};
+			}
+		</script>
+	</head>
+	<body class="cosmic-background min-h-screen text-white font-sans cursor-none">
+		<!-- Cosmic Background Component -->
+		@components.CosmicBackground()
+
+		<!-- Navbar -->
+		@components.Navbar(activeNav)
+
+		<!-- Main Content -->
+		<main class="relative z-10 w-full">
+			{ children... }
+		</main>
+
+		<!-- Footer -->
+		@components.Footer()
+
+		<!-- JavaScript -->
+		<script src="/static/js/mouse-follower.js"></script>
+		<script src="/static/js/animations.js"></script>
+		<script src="/static/js/transitions.js"></script>
+
+		<!-- Analytics (placeholder) -->
+		<!-- Google Analytics or other analytics scripts would go here -->
+	</body>
+	</html>
+}

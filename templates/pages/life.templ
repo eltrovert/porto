@@ -1,0 +1,135 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+
+templ Life() {
+	@layouts.Base("Life", "life") {
+		<div class="pt-32 min-h-screen">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Page Header -->
+				<section class="mb-16 text-center animate-on-scroll">
+					<h1 class="text-5xl md:text-6xl font-bold text-white mb-6 font-mono">
+						<span class="text-accent">&gt;_</span> offline_mode
+						<span class="animate-pulse text-accent ml-2">_</span>
+					</h1>
+					<p class="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+						Life beyond the terminal. Thoughts, experiences, and adventures outside the digital realm.
+					</p>
+				</section>
+
+				<!-- Life Content -->
+				<section class="space-y-12">
+					<!-- About My Journey -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Journey
+						</h2>
+						<div class="space-y-6 text-gray-300 leading-relaxed">
+							<p>
+								Born and raised in Indonesia, my journey in technology began with curiosity about how systems work.
+								Over 13+ years, I've had the privilege of working across different continents, learning from diverse
+								cultures and approaches to problem-solving.
+							</p>
+							<p>
+								Beyond the code and infrastructure, I'm passionate about mentoring the next generation of engineers,
+								exploring sustainable technology practices, and finding ways to bridge the gap between technical
+								complexity and human understanding.
+							</p>
+						</div>
+					</div>
+
+					<!-- Current Focus -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Current Focus
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div class="space-y-4">
+								<h3 class="text-xl font-bold text-white font-mono">Professional</h3>
+								<ul class="space-y-2 text-gray-300">
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Building resilient MLOps platforms
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Scaling Kubernetes in production
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Exploring edge computing patterns
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Contributing to open source projects
+									</li>
+								</ul>
+							</div>
+							<div class="space-y-4">
+								<h3 class="text-xl font-bold text-white font-mono">Personal</h3>
+								<ul class="space-y-2 text-gray-300">
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Learning sustainable living practices
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Exploring photography and visual arts
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Reading philosophy and science fiction
+									</li>
+									<li class="flex items-center gap-2">
+										<span class="text-accent">•</span> Building a homelab for experimentation
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<!-- Principles -->
+					<div class="card p-8 animate-on-scroll">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Principles
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+							<div class="text-center space-y-3">
+								<div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+									<span class="text-accent font-mono font-bold">01</span>
+								</div>
+								<h3 class="text-lg font-bold text-white">Continuous Learning</h3>
+								<p class="text-gray-400 text-sm">Technology evolves rapidly; staying curious and adaptive is essential.</p>
+							</div>
+							<div class="text-center space-y-3">
+								<div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+									<span class="text-accent font-mono font-bold">02</span>
+								</div>
+								<h3 class="text-lg font-bold text-white">Human-Centric Design</h3>
+								<p class="text-gray-400 text-sm">Technology should amplify human potential, not complicate it.</p>
+							</div>
+							<div class="text-center space-y-3">
+								<div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto">
+									<span class="text-accent font-mono font-bold">03</span>
+								</div>
+								<h3 class="text-lg font-bold text-white">Sustainable Impact</h3>
+								<p class="text-gray-400 text-sm">Building solutions that consider long-term environmental and social impact.</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Contact -->
+					<div class="card p-8 animate-on-scroll text-center">
+						<h2 class="text-3xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Connect
+						</h2>
+						<p class="text-gray-400 mb-6">
+							Interested in collaborating, sharing ideas, or just having a conversation about technology and life?
+						</p>
+						<div class="flex justify-center gap-4">
+							<a href="mailto:hello@eltrovert.com" class="btn-primary">
+								Send Message
+							</a>
+							<a href="/guestbook" hx-get="/guestbook" hx-target="body" hx-push-url="true" class="btn-secondary">
+								Sign Guestbook
+							</a>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	}
+}

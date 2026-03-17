@@ -1,0 +1,129 @@
+package components
+
+templ Footer() {
+	<!-- Terminal Footer -->
+	<footer class="bg-darker/80 border-t border-white/5 p-8 mt-16 relative z-10">
+		<div class="max-w-7xl mx-auto">
+			<!-- Newsletter Signup -->
+			<div class="flex items-center bg-darkest border border-white/10 rounded px-4 py-2 mb-6 max-w-md">
+				<span class="text-green-500 mr-2 font-mono">➜</span>
+				<input
+					type="email"
+					placeholder="./subscribe.sh --email"
+					class="bg-transparent text-gray-300 flex-1 outline-none font-mono placeholder-gray-500"
+					id="newsletter-email"
+				/>
+				<button
+					class="text-accent font-bold ml-2 font-mono hover:text-yellow-300 transition-colors"
+					onclick="handleNewsletterSignup()"
+				>
+					[ENTER]
+				</button>
+			</div>
+
+			<!-- Footer Content Grid -->
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+				<!-- About Column -->
+				<div class="space-y-3">
+					<h4 class="text-accent font-mono font-bold text-sm">About</h4>
+					<p class="text-gray-400 text-sm leading-relaxed">
+						Senior DevOps & Cloud Architect passionate about building scalable infrastructure and sharing knowledge.
+					</p>
+				</div>
+
+				<!-- Quick Links -->
+				<div class="space-y-3">
+					<h4 class="text-accent font-mono font-bold text-sm">Navigate</h4>
+					<div class="space-y-1">
+						<a href="/about" class="block text-gray-400 hover:text-white text-sm transition-colors">About</a>
+						<a href="/projects" class="block text-gray-400 hover:text-white text-sm transition-colors">Projects</a>
+						<a href="/posts" class="block text-gray-400 hover:text-white text-sm transition-colors">Blog</a>
+						<a href="/talks" class="block text-gray-400 hover:text-white text-sm transition-colors">Talks</a>
+					</div>
+				</div>
+
+				<!-- External Links -->
+				<div class="space-y-3">
+					<h4 class="text-accent font-mono font-bold text-sm">Connect</h4>
+					<div class="space-y-1">
+						<a href="https://github.com/eltrovert" target="_blank" rel="noopener noreferrer" class="block text-gray-400 hover:text-white text-sm transition-colors">GitHub</a>
+						<a href="https://linkedin.com/in/eltrovert" target="_blank" rel="noopener noreferrer" class="block text-gray-400 hover:text-white text-sm transition-colors">LinkedIn</a>
+						<a href="https://twitter.com/eltrovert" target="_blank" rel="noopener noreferrer" class="block text-gray-400 hover:text-white text-sm transition-colors">Twitter</a>
+						<a href="/rss.xml" target="_blank" class="block text-gray-400 hover:text-white text-sm transition-colors">RSS</a>
+					</div>
+				</div>
+
+				<!-- System Status -->
+				<div class="space-y-3">
+					<h4 class="text-accent font-mono font-bold text-sm">System</h4>
+					<div class="space-y-2">
+						<div class="flex items-center gap-2 text-sm">
+							<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+							<span class="text-gray-400">All Systems Online</span>
+						</div>
+						<div class="flex items-center gap-2 text-sm">
+							<div class="w-2 h-2 rounded-full bg-accent"></div>
+							<span class="text-gray-400">Built with Go + HTMX</span>
+						</div>
+						<div class="text-xs text-gray-500 font-mono">
+							v2026.03.18
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Bottom Bar -->
+			<div class="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-white/5">
+				<div class="flex items-center gap-4 text-xs text-gray-600 font-mono">
+					<span class="flex items-center gap-2">
+						<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+						Systems Online
+					</span>
+					<span>•</span>
+					<span>Uptime: 99.9%</span>
+					<span>•</span>
+					<span>Response: ~42ms</span>
+				</div>
+
+				<div class="flex items-center gap-4 text-xs text-gray-600 mt-4 md:mt-0">
+					<span>© 2026 El Muhammad</span>
+					<span>•</span>
+					<a href="/privacy" class="hover:text-gray-400 transition-colors">Privacy</a>
+					<span>•</span>
+					<a href="/terms" class="hover:text-gray-400 transition-colors">Terms</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		function handleNewsletterSignup() {
+			const email = document.getElementById('newsletter-email');
+			if (email.value && email.value.includes('@')) {
+				// Simulate newsletter signup
+				email.value = 'Subscribed! 🚀';
+				email.disabled = true;
+
+				setTimeout(() => {
+					email.value = '';
+					email.disabled = false;
+					email.placeholder = './subscribe.sh --email';
+				}, 2000);
+			} else {
+				email.placeholder = './error: invalid email format';
+				email.value = '';
+
+				setTimeout(() => {
+					email.placeholder = './subscribe.sh --email';
+				}, 1000);
+			}
+		}
+
+		// Handle enter key for newsletter signup
+		document.getElementById('newsletter-email').addEventListener('keypress', function(e) {
+			if (e.key === 'Enter') {
+				handleNewsletterSignup();
+			}
+		});
+	</script>
+}

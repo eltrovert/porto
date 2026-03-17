@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/eltrovert/porto/internal/content"
+	"github.com/eltrovert/porto/templates/pages"
 )
 
 // Common HTML template functions
@@ -151,35 +152,23 @@ func (s *Server) handleHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Portfolio", "home") + `
-		<div class="text-center mb-16">
-			<h1 class="text-6xl font-bold mb-4">El Muhammad<span class="animate-pulse text-accent ml-2">_</span></h1>
-			<p class="text-xl text-gray-400">Senior DevOps & Cloud Architect</p>
-		</div>
-		<section class="blog-posts max-w-4xl mx-auto">
-			<h2 class="text-3xl font-bold mb-8">Latest Blog Posts</h2>
-			<!-- Blog posts would be listed here -->
-		</section>
-	` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	// Render the home template
+	component := pages.Home()
+	err := component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handleAbout(w http.ResponseWriter, r *http.Request) {
-	html := htmlHeader("About", "about") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> whoami
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<div class="bg-black/40 border border-white/10 p-8 rounded max-w-4xl mx-auto">
-			<h2 class="text-2xl font-bold mb-4 text-accent">El Muhammad</h2>
-			<p class="text-gray-300 text-lg">Senior DevOps & Cloud Architect passionate about building scalable infrastructure.</p>
-		</div>
-	` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	// Render the about template
+	component := pages.About()
+	err := component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handleProjects(w http.ResponseWriter, r *http.Request) {
@@ -189,23 +178,13 @@ func (s *Server) handleProjects(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Projects", "projects") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> explored_nebulas
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<ul class="space-y-4">`
-
-	for _, project := range projects {
-		html += `<li class="bg-black/40 border border-white/10 p-4 rounded">
-			<a href="/projects/` + project.Slug + `" class="text-accent hover:text-white transition-colors">` + project.Title + `</a>
-		</li>`
+	// Render the projects template
+	component := pages.Projects(projects)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	html += `</ul>` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
 }
 
 func (s *Server) handleProjectDetail(w http.ResponseWriter, r *http.Request) {
@@ -223,8 +202,13 @@ func (s *Server) handleProjectDetail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Project Detail"))
+	// Render the project detail template
+	component := pages.ProjectDetail(*project)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handlePosts(w http.ResponseWriter, r *http.Request) {
@@ -234,23 +218,13 @@ func (s *Server) handlePosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Posts", "posts") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> my_writing.md
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<ul class="space-y-4">`
-
-	for _, post := range posts {
-		html += `<li class="bg-black/40 border border-white/10 p-4 rounded">
-			<a href="/posts/` + post.Slug + `" class="text-accent hover:text-white transition-colors">` + post.Title + `</a>
-		</li>`
+	// Render the posts template
+	component := pages.Posts(posts)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	html += `</ul>` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
 }
 
 func (s *Server) handlePostDetail(w http.ResponseWriter, r *http.Request) {
@@ -268,17 +242,23 @@ func (s *Server) handlePostDetail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := `<!DOCTYPE html>
-<html>
-<head><title>` + post.Title + `</title></head>
-<body>
-	<h1>` + post.Title + `</h1>
-	<div class="content">` + post.ContentHTML + `</div>
-</body>
-</html>`
+	// Get comments for this post
+	comments, err := s.store.ListCommentsByPost(post.ID)
+	if err != nil {
+		// Log error but continue without comments
+		comments = []*content.Comment{}
+	}
 
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	// For now, assume no like status (could be enhanced with session/cookie tracking)
+	isLiked := false
+
+	// Render the post detail template
+	component := pages.PostDetail(*post, comments, isLiked)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handleTalks(w http.ResponseWriter, r *http.Request) {
@@ -288,40 +268,29 @@ func (s *Server) handleTalks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Talks", "talks") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> transmission_logs
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<ul class="space-y-4">`
-
-	for _, talk := range talks {
-		html += `<li class="bg-black/40 border border-white/10 p-4 rounded">
-			<h3 class="text-accent font-bold">` + talk.Title + `</h3>
-			<p class="text-gray-400">` + talk.Event + `</p>
-		</li>`
+	// Render the talks template
+	component := pages.Talks(talks)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	html += `</ul>` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
 }
 
 func (s *Server) handleUses(w http.ResponseWriter, r *http.Request) {
-	html := htmlHeader("Uses", "uses") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> hardware_manifest.json
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<div class="bg-black/40 border border-white/10 p-8 rounded max-w-4xl mx-auto">
-			<h2 class="text-2xl font-bold mb-4 text-accent">What I Use</h2>
-			<p class="text-gray-300">Tools and hardware I rely on.</p>
-		</div>
-	` + htmlFooter()
+	items, err := s.store.ListUsesItems()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	// Render the uses template
+	component := pages.Uses(items)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handleBooks(w http.ResponseWriter, r *http.Request) {
@@ -331,40 +300,23 @@ func (s *Server) handleBooks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Books", "books") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> knowledge_base
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<ul class="space-y-4">`
-
-	for _, book := range books {
-		html += `<li class="bg-black/40 border border-white/10 p-4 rounded">
-			<h3 class="text-accent font-bold">` + book.Title + `</h3>
-			<p class="text-gray-400">by ` + book.Author + `</p>
-		</li>`
+	// Render the books template
+	component := pages.Books(books)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	html += `</ul>` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
 }
 
 func (s *Server) handleLife(w http.ResponseWriter, r *http.Request) {
-	html := htmlHeader("Life", "life") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> offline_mode
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<div class="bg-black/40 border border-white/10 p-8 rounded max-w-4xl mx-auto">
-			<h2 class="text-2xl font-bold mb-4 text-accent">Life Outside Tech</h2>
-			<p class="text-gray-300">My hobbies and interests.</p>
-		</div>
-	` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	// Render the life template
+	component := pages.Life()
+	err := component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handleNotes(w http.ResponseWriter, r *http.Request) {
@@ -374,23 +326,13 @@ func (s *Server) handleNotes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Notes", "notes") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> quick_logs.txt
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<ul class="space-y-4">`
-
-	for _, note := range notes {
-		html += `<li class="bg-black/40 border border-white/10 p-4 rounded">
-			<p class="text-gray-300">` + note.Content + `</p>
-		</li>`
+	// Render the notes template
+	component := pages.Notes(notes)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	html += `</ul>` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
 }
 
 func (s *Server) handleGuestbook(w http.ResponseWriter, r *http.Request) {
@@ -405,53 +347,23 @@ func (s *Server) handleGuestbook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := htmlHeader("Guestbook", "guestbook") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> visitor_log
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<ul class="space-y-4 mb-8">`
-
-	for _, entry := range entries {
-		html += `<li class="bg-black/40 border border-white/10 p-4 rounded">
-			<p class="text-accent font-bold">` + entry.Name + `:</p>
-			<p class="text-gray-300">` + entry.Message + `</p>
-		</li>`
+	// Render the guestbook template
+	component := pages.Guestbook(entries)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-
-	html += `</ul>
-		<div class="bg-black/40 border border-white/10 p-6 rounded max-w-2xl mx-auto">
-			<form method="POST" class="space-y-4">
-				<input type="text" name="name" placeholder="Your name" required
-					class="w-full p-3 bg-black border border-white/10 rounded text-white">
-				<textarea name="message" placeholder="Your message" required
-					class="w-full p-3 bg-black border border-white/10 rounded text-white h-24"></textarea>
-				<button type="submit"
-					class="w-full bg-accent text-black font-bold py-3 rounded hover:bg-yellow-400 transition-colors">
-					Add Entry
-				</button>
-			</form>
-		</div>
-	` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
 }
 
 func (s *Server) handleKudos(w http.ResponseWriter, r *http.Request) {
-	html := htmlHeader("Kudos", "kudos") + `
-		<h1 class="text-5xl font-bold mb-8 text-center">
-			<span class="text-accent">&gt;_</span> dependencies
-			<span class="animate-pulse text-accent ml-2">_</span>
-		</h1>
-		<div class="bg-black/40 border border-white/10 p-8 rounded max-w-4xl mx-auto">
-			<h2 class="text-2xl font-bold mb-4 text-accent">Kudos</h2>
-			<p class="text-gray-300">Credits and thanks to the amazing tools and people that make this possible.</p>
-		</div>
-	` + htmlFooter()
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	// Render the kudos template
+	component := pages.Kudos()
+	err := component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) handleRSS(w http.ResponseWriter, r *http.Request) {
@@ -602,7 +514,9 @@ func (s *Server) handlePartialTalks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleStatic(w http.ResponseWriter, r *http.Request) {
-	http.NotFound(w, r)
+	// Remove the "/static/" prefix and serve from the static directory
+	path := strings.TrimPrefix(r.URL.Path, "/static/")
+	http.ServeFile(w, r, "./static/"+path)
 }
 
 // Form handlers

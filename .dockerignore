@@ -1,0 +1,66 @@
+# Git and version control
+.git/
+.gitignore
+.gitattributes
+
+# Build artifacts
+bin/
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# Development files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Test files
+*_test.go
+coverage.out
+coverage.html
+
+# Reference files (not needed in production)
+.reference-blog-astro/
+.reference-web-portofolio/
+
+# Development database
+data/porto-dev.db
+
+# Temporary files
+tmp/
+temp/
+
+# Log files
+*.log
+
+# Docker files (avoid recursive copy)
+Dockerfile*
+docker-compose*.yml
+
+# Generated files that will be built in container
+templates/**/*_templ.go

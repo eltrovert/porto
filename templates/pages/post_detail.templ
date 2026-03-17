@@ -1,0 +1,199 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+import "github.com/eltrovert/porto/internal/content"
+import "strconv"
+
+templ PostDetail(post content.Post, comments []*content.Comment, isLiked bool) {
+	@layouts.Base(post.Title, "posts") {
+		<div class="pt-32 min-h-screen">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Breadcrumb -->
+				<nav class="mb-8 animate-on-scroll">
+					<div class="flex items-center gap-2 text-sm font-mono">
+						<a href="/posts" hx-get="/posts" hx-target="body" hx-push-url="true"
+						   class="text-gray-400 hover:text-accent transition-colors">posts</a>
+						<span class="text-gray-600">/</span>
+						<span class="text-accent">{ post.Slug }</span>
+					</div>
+				</nav>
+
+				<!-- Post Header -->
+				<article class="mb-16 animate-on-scroll">
+					<header class="mb-8">
+						<h1 class="text-4xl md:text-5xl font-bold text-white mb-6 font-mono leading-tight">
+							{ post.Title }
+						</h1>
+
+						<!-- Post Meta -->
+						<div class="flex flex-wrap items-center gap-6 mb-6 text-sm">
+							<div class="flex items-center gap-2">
+								<span class="text-accent font-mono">date:</span>
+								<span class="text-gray-300">{ post.DateFormatted }</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-accent font-mono">read_time:</span>
+								<span class="text-gray-300">{ post.ReadTime }</span>
+							</div>
+							if post.Topic != "" {
+								<div class="flex items-center gap-2">
+									<span class="text-accent font-mono">topic:</span>
+									<span class="bg-accent/10 text-accent px-2 py-1 rounded text-xs font-mono">{ post.Topic }</span>
+								</div>
+							}
+						</div>
+
+						<!-- Post Description -->
+						if post.Description != "" {
+							<p class="text-gray-400 text-lg leading-relaxed mb-8">{ post.Description }</p>
+						}
+
+						<!-- Tags -->
+						if post.Tags != "" {
+							<div class="flex items-center gap-2 mb-8">
+								<span class="text-accent font-mono text-sm">tags:</span>
+								<div class="flex flex-wrap gap-2">
+									<!-- Simple tags display - could be enhanced to parse JSON -->
+									<span class="bg-white/5 text-gray-300 px-2 py-1 rounded text-xs font-mono">
+										{ post.Tags }
+									</span>
+								</div>
+							</div>
+						}
+					</header>
+
+					<!-- Post Content -->
+					<div class="card p-8 mb-8">
+						if post.ContentHTML != "" {
+							<div class="prose prose-invert max-w-none">
+								@templ.Raw(post.ContentHTML)
+							</div>
+						} else {
+							<div class="text-gray-300 leading-relaxed whitespace-pre-wrap">{ post.ContentMD }</div>
+						}
+					</div>
+
+					<!-- Post Actions -->
+					<div class="flex items-center justify-between mb-8">
+						<!-- Like Button -->
+						<div class="flex items-center gap-4">
+							if isLiked {
+								<button hx-post={ "/posts/" + post.Slug + "/like" }
+										hx-target="#like-button"
+										hx-swap="outerHTML"
+										id="like-button"
+										class="flex items-center gap-2 px-4 py-2 rounded transition-colors font-mono text-sm bg-accent/20 text-accent">
+									<span>❤️</span>
+									<span>Liked</span>
+									<span class="text-xs">({ strconv.Itoa(post.Likes) })</span>
+								</button>
+							} else {
+								<button hx-post={ "/posts/" + post.Slug + "/like" }
+										hx-target="#like-button"
+										hx-swap="outerHTML"
+										id="like-button"
+										class="flex items-center gap-2 px-4 py-2 rounded transition-colors font-mono text-sm bg-white/5 text-gray-400 hover:text-accent hover:bg-accent/10">
+									<span>❤️</span>
+									<span>Like</span>
+									<span class="text-xs">({ strconv.Itoa(post.Likes) })</span>
+								</button>
+							}
+
+							<!-- Share button placeholder -->
+							<button onclick="navigator.share ? navigator.share({title: '{ post.Title }', url: window.location.href}) : navigator.clipboard.writeText(window.location.href)"
+									class="flex items-center gap-2 px-4 py-2 rounded bg-white/5 text-gray-400 hover:text-accent hover:bg-accent/10 transition-colors font-mono text-sm">
+								<span>📤</span>
+								<span>Share</span>
+							</button>
+						</div>
+
+						<!-- Reading progress indicator could go here -->
+					</div>
+				</article>
+
+				<!-- Comments Section -->
+				<section class="space-y-8">
+					<div class="border-t border-white/10 pt-8">
+						<h2 class="text-2xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Comments ({ strconv.Itoa(len(comments)) })
+						</h2>
+
+						<!-- Add Comment Form -->
+						<div class="card p-6 mb-8">
+							<h3 class="text-lg font-bold text-white mb-4 font-mono">Leave a Comment</h3>
+							<form hx-post={ "/posts/" + post.Slug + "/comment" }
+								  hx-target="#comments-list"
+								  hx-swap="afterbegin">
+								<div class="space-y-4">
+									<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+										<div>
+											<label for="author" class="block text-accent font-mono text-sm mb-2">name:</label>
+											<input type="text" id="author" name="author" required
+												   class="w-full bg-darkest border border-white/20 rounded px-3 py-2 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none"
+												   placeholder="your_name"/>
+										</div>
+										<div>
+											<label for="email" class="block text-accent font-mono text-sm mb-2">email: <span class="text-gray-500">(optional)</span></label>
+											<input type="email" id="email" name="email"
+												   class="w-full bg-darkest border border-white/20 rounded px-3 py-2 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none"
+												   placeholder="your@email.com"/>
+										</div>
+									</div>
+									<div>
+										<label for="content" class="block text-accent font-mono text-sm mb-2">comment:</label>
+										<textarea id="content" name="content" rows="4" required
+												  class="w-full bg-darkest border border-white/20 rounded px-3 py-2 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none resize-vertical"
+												  placeholder="Your thoughts on this post..."></textarea>
+									</div>
+									<button type="submit" class="btn-primary">
+										Submit Comment
+									</button>
+								</div>
+							</form>
+						</div>
+
+						<!-- Comments List -->
+						<div class="space-y-6" id="comments-list">
+							if len(comments) == 0 {
+								<div class="text-center py-8 text-gray-400">
+									<p>No comments yet. Be the first to share your thoughts!</p>
+								</div>
+							}
+							for _, comment := range comments {
+								<div class="card p-6">
+									<div class="flex items-start gap-4">
+										<!-- Avatar -->
+										<div class="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center shrink-0">
+											<span class="text-accent font-mono font-bold text-sm">
+												{ comment.AuthorName[:min(1, len(comment.AuthorName))] }
+											</span>
+										</div>
+
+										<!-- Comment Content -->
+										<div class="flex-1">
+											<div class="flex items-center gap-4 mb-2">
+												<span class="text-white font-bold">{ comment.AuthorName }</span>
+												<span class="text-gray-500 text-sm font-mono">{ comment.CreatedAt.Format("2006-01-02") }</span>
+											</div>
+											<p class="text-gray-300 leading-relaxed">{ comment.Content }</p>
+										</div>
+									</div>
+								</div>
+							}
+						</div>
+					</div>
+				</section>
+
+				<!-- Related Posts / Navigation -->
+				<section class="mt-16 pt-8 border-t border-white/10">
+					<div class="flex justify-center">
+						<a href="/posts" hx-get="/posts" hx-target="body" hx-push-url="true"
+						   class="btn-secondary">
+							← Back to All Posts
+						</a>
+					</div>
+				</section>
+			</div>
+		</div>
+	}
+}

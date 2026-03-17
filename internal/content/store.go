@@ -10,7 +10,7 @@ type Store struct {
 	db *sql.DB
 }
 
-// NewStore creates a new store instance
+// NewStore creates a new store instance from a database path
 func NewStore(dbPath string) (*Store, error) {
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
@@ -23,6 +23,16 @@ func NewStore(dbPath string) (*Store, error) {
 	}
 
 	return store, nil
+}
+
+// NewStoreFromDB creates a new store instance from an existing database connection
+func NewStoreFromDB(db *sql.DB) *Store {
+	return &Store{db: db}
+}
+
+// InitSchema initializes the database schema (alias for createTables)
+func (s *Store) InitSchema() error {
+	return s.createTables()
 }
 
 // DB returns the underlying database connection

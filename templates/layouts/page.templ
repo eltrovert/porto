@@ -1,0 +1,33 @@
+package layouts
+
+templ Page(title string, activeNav string) {
+	@Base(title, activeNav) {
+		<div class="pt-32 min-h-screen px-4 max-w-6xl mx-auto">
+			{ children... }
+		</div>
+	}
+}
+
+templ PageFullWidth(title string, activeNav string) {
+	@Base(title, activeNav) {
+		<div class="pt-32 min-h-screen">
+			{ children... }
+		</div>
+	}
+}
+
+templ PageCentered(title string, activeNav string) {
+	@Base(title, activeNav) {
+		<div class="pt-32 min-h-screen px-4 max-w-4xl mx-auto">
+			{ children... }
+		</div>
+	}
+}
+
+templ PageWide(title string, activeNav string) {
+	@Base(title, activeNav) {
+		<div class="pt-32 min-h-screen px-4 max-w-7xl mx-auto">
+			{ children... }
+		</div>
+	}
+}

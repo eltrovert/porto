@@ -1,0 +1,56 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+import "github.com/eltrovert/porto/internal/content"
+
+templ Uses(items []*content.UsesItem) {
+	@layouts.Base("Uses", "uses") {
+		<div class="pt-32 min-h-screen">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Page Header -->
+				<section class="mb-16 text-center animate-on-scroll">
+					<h1 class="text-5xl md:text-6xl font-bold text-white mb-6 font-mono">
+						<span class="text-accent">&gt;_</span> hardware_manifest
+						<span class="animate-pulse text-accent ml-2">_</span>
+					</h1>
+					<p class="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+						Tools, software, and hardware that power my daily workflow and development environment.
+					</p>
+				</section>
+
+				<!-- Uses Grid -->
+				<section class="space-y-12">
+					if len(items) == 0 {
+						<div class="card p-8 text-center">
+							<p class="text-gray-400">System configuration loading... Check back soon!</p>
+						</div>
+					} else {
+						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+							for _, item := range items {
+								<div class="card p-6 animate-on-scroll">
+									<div class="flex items-start gap-4">
+										<div class="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center shrink-0">
+											<span class="text-accent font-mono font-bold">
+												{ item.Title[:2] }
+											</span>
+										</div>
+										<div class="flex-1">
+											<h3 class="text-lg font-bold text-white mb-2">{ item.Title }</h3>
+											<p class="text-gray-400 text-sm mb-3">{ item.Description }</p>
+											if item.Link != "" {
+												<a href={ templ.URL(item.Link) } target="_blank" rel="noopener noreferrer"
+												   class="text-accent hover:text-white font-mono text-sm">
+													Learn more →
+												</a>
+											}
+										</div>
+									</div>
+								</div>
+							}
+						</div>
+					}
+				</section>
+			</div>
+		</div>
+	}
+}

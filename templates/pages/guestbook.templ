@@ -1,0 +1,110 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+import "github.com/eltrovert/porto/internal/content"
+
+templ Guestbook(entries []*content.GuestEntry) {
+	@layouts.Base("Guestbook", "guestbook") {
+		<div class="pt-32 min-h-screen">
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Page Header -->
+				<section class="mb-16 text-center animate-on-scroll">
+					<h1 class="text-5xl md:text-6xl font-bold text-white mb-6 font-mono">
+						<span class="text-accent">&gt;_</span> visitor_log
+						<span class="animate-pulse text-accent ml-2">_</span>
+					</h1>
+					<p class="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+						Leave your mark in the digital guestbook. Share your thoughts, feedback, or just say hello!
+					</p>
+				</section>
+
+				<!-- Sign Guestbook Form -->
+				<section class="mb-16 animate-on-scroll">
+					<div class="card p-8">
+						<h2 class="text-2xl font-bold text-white mb-6 font-mono">
+							<span class="text-accent">#</span> Sign the Guestbook
+						</h2>
+
+						<form hx-post="/guestbook" hx-target="#guestbook-entries" hx-swap="afterbegin">
+							<div class="space-y-6">
+								<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+									<div>
+										<label for="name" class="block text-accent font-mono text-sm mb-2">name:</label>
+										<input type="text" id="name" name="name" required
+											   class="w-full bg-darkest border border-white/20 rounded px-4 py-3 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none"
+											   placeholder="your_name_here"/>
+									</div>
+									<div>
+										<label for="email" class="block text-accent font-mono text-sm mb-2">email: <span class="text-gray-500">(optional)</span></label>
+										<input type="email" id="email" name="email"
+											   class="w-full bg-darkest border border-white/20 rounded px-4 py-3 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none"
+											   placeholder="your@email.com"/>
+									</div>
+								</div>
+
+								<div>
+									<label for="message" class="block text-accent font-mono text-sm mb-2">message:</label>
+									<textarea id="message" name="message" rows="4" required
+											  class="w-full bg-darkest border border-white/20 rounded px-4 py-3 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none resize-vertical"
+											  placeholder="Your message here... Feel free to share thoughts, feedback, or just say hello!"></textarea>
+								</div>
+
+								<div>
+									<label for="website" class="block text-accent font-mono text-sm mb-2">website/social: <span class="text-gray-500">(optional)</span></label>
+									<input type="url" id="website" name="website"
+										   class="w-full bg-darkest border border-white/20 rounded px-4 py-3 text-white font-mono placeholder-gray-500 focus:border-accent focus:outline-none"
+										   placeholder="https://your-site.com"/>
+								</div>
+
+								<button type="submit"
+										class="btn-primary w-full md:w-auto">
+									Submit Entry
+								</button>
+							</div>
+						</form>
+					</div>
+				</section>
+
+				<!-- Guestbook Entries -->
+				<section class="space-y-6" id="guestbook-entries">
+					if len(entries) == 0 {
+						<div class="card p-8 text-center">
+							<p class="text-gray-400">No entries yet. Be the first to sign the guestbook!</p>
+						</div>
+					}
+					for _, entry := range entries {
+						<div class="card p-6 animate-on-scroll">
+							<div class="flex items-start gap-4">
+								<!-- Avatar placeholder -->
+								<div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center shrink-0">
+									<span class="text-accent font-mono font-bold">
+										{ entry.Name[:min(1, len(entry.Name))] }
+									</span>
+								</div>
+
+								<!-- Entry content -->
+								<div class="flex-1">
+									<div class="flex items-center gap-4 mb-3">
+										<span class="text-white font-bold">{ entry.Name }</span>
+										<span class="text-gray-500 text-sm font-mono">{ entry.CreatedAt.Format("2006-01-02") }</span>
+									</div>
+
+									<p class="text-gray-300 leading-relaxed">{ entry.Message }</p>
+								</div>
+							</div>
+						</div>
+					}
+				</section>
+
+				<!-- Footer note -->
+				<div class="mt-16 text-center">
+					<div class="card p-6 bg-darker/50">
+						<p class="text-gray-500 text-sm font-mono">
+							# All entries are moderated. Please be respectful and constructive.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
