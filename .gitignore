@@ -1,0 +1,8 @@
+.reference-web-portofolio/
+.reference-blog-astro/
+bin/
+data/
+node_modules/
+static/css/out.css
+*.db
+porto
