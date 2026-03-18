@@ -2,6 +2,13 @@ package components
 
 import "strconv"
 
+func orbitDirection(reverse bool) string {
+	if reverse {
+		return " reverse"
+	}
+	return ""
+}
+
 // AbstractVisual creates the complex 3D cosmic visual effect with orbital elements
 templ AbstractVisual() {
 	<div class="relative w-full h-[600px] flex items-center justify-center -mt-24" style="transform-style: preserve-3d; transform: rotateX(5deg) rotateY(5deg);">
@@ -90,17 +97,24 @@ templ UniverseNode(top, left, delay string) {
 }
 
 // OrbitIcon creates an orbiting icon around the center
+// Outer div rotates (normal or reverse). Inner div counter-rotates to keep icon upright.
 templ OrbitIcon(radius, duration, delay int, icon templ.Component, reverse bool) {
 	<div
-		class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit-spin"
+		class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 		style={
 			"width: " + strconv.Itoa(radius * 2) + "px; " +
 			"height: " + strconv.Itoa(radius * 2) + "px; " +
-			"animation-duration: " + strconv.Itoa(duration) + "s; " +
-			"animation-delay: " + strconv.Itoa(delay) + "s;"
+			"animation: spin " + strconv.Itoa(duration) + "s linear infinite" + orbitDirection(reverse) + "; " +
+			"animation-delay: -" + strconv.Itoa(delay) + "s; " +
+			"transform-style: preserve-3d;"
 		}
 	>
-		<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+		<div
+			class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+			style={
+				"animation: spin " + strconv.Itoa(duration) + "s linear infinite" + orbitDirection(!reverse) + ";"
+			}
+		>
 			<div class="bg-dark p-2 rounded-full border border-white/10 shadow-xl hover:border-accent hover:scale-110 transition-all cursor-pointer z-20 relative">
 				@icon
 			</div>

@@ -9,93 +9,6 @@ import (
 	"github.com/eltrovert/porto/templates/pages"
 )
 
-// Common HTML template functions
-func htmlHeader(title, activeNav string) string {
-	return `<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>` + title + ` - El Muhammad</title>
-	<script src="https://unpkg.com/htmx.org@1.9.10"></script>
-	<script src="https://cdn.tailwindcss.com"></script>
-	<style>
-		.cosmic-background { background: #050505; }
-		.accent { color: #ffcf0d; }
-		.font-mono { font-family: monospace; }
-		.backdrop-blur { backdrop-filter: blur(16px); }
-		@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-		.animate-pulse { animation: pulse 1s infinite; }
-	</style>
-	<script>
-		// Mouse follower script
-		document.addEventListener('DOMContentLoaded', function() {
-			const cursor = document.createElement('div');
-			cursor.className = 'mouse-follower';
-			cursor.style.cssText = 'position: fixed; width: 8px; height: 8px; background: #ffcf0d; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference;';
-			document.body.appendChild(cursor);
-
-			const ring = document.createElement('div');
-			ring.style.cssText = 'position: fixed; width: 32px; height: 32px; border: 1px solid rgba(255, 207, 13, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998;';
-			document.body.appendChild(ring);
-
-			document.addEventListener('mousemove', function(e) {
-				cursor.style.left = (e.clientX - 4) + 'px';
-				cursor.style.top = (e.clientY - 4) + 'px';
-				ring.style.left = (e.clientX - 16) + 'px';
-				ring.style.top = (e.clientY - 16) + 'px';
-			});
-		});
-	</script>
-</head>
-<body class="cosmic-background min-h-screen text-white font-mono">
-	<!-- Glassmorphism Navbar -->
-	<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-4">
-		<div class="bg-black/90 backdrop-blur border border-white/10 rounded px-6 py-3 flex items-center space-x-6">
-			<span class="font-bold text-white">eltrovert.com<span class="animate-pulse text-accent ml-1">_</span></span>
-			<a href="/" class="` + navClass("home", activeNav) + `">Home</a>
-			<a href="/projects" class="` + navClass("projects", activeNav) + `">Projects</a>
-			<a href="/posts" class="` + navClass("posts", activeNav) + `">Posts</a>
-			<a href="/about" class="` + navClass("about", activeNav) + `">About</a>
-		</div>
-	</nav>
-
-	<main class="pt-32 min-h-screen px-4 max-w-6xl mx-auto">`
-}
-
-func navClass(nav, activeNav string) string {
-	if nav == activeNav {
-		return "text-accent"
-	}
-	return "text-gray-400 hover:text-white"
-}
-
-func htmlFooter() string {
-	return `	</main>
-
-	<!-- Terminal Footer -->
-	<footer class="bg-black/80 border-t border-white/5 p-8 mt-16">
-		<div class="max-w-7xl mx-auto">
-			<div class="flex items-center bg-black border border-white/10 rounded px-4 py-2 mb-6 max-w-md">
-				<span class="text-green-500 mr-2">➜</span>
-				<input type="email" placeholder="./subscribe.sh --email" class="bg-transparent text-gray-300 flex-1 outline-none">
-				<button class="text-accent font-bold ml-2">[ENTER]</button>
-			</div>
-			<div class="flex justify-between items-center text-xs text-gray-600">
-				<div class="flex items-center gap-4">
-					<span class="flex items-center gap-2">
-						<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-						Systems Online
-					</span>
-				</div>
-				<span>© 2026 El Muhammad</span>
-			</div>
-		</div>
-	</footer>
-</body>
-</html>`
-}
-
 // Server holds the HTTP server configuration
 type Server struct {
 	store *content.Store
@@ -126,6 +39,9 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("/notes", s.handleNotes)
 	mux.HandleFunc("/guestbook", s.handleGuestbook)
 	mux.HandleFunc("/kudos", s.handleKudos)
+	mux.HandleFunc("/privacy", s.handlePrivacy)
+	mux.HandleFunc("/terms", s.handleTerms)
+	mux.HandleFunc("/talks/", s.handleTalkDetail) // Catch /talks/{slug}/deck
 
 	// Feed routes
 	mux.HandleFunc("/rss.xml", s.handleRSS)
@@ -365,6 +281,43 @@ func (s *Server) handleKudos(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func (s *Server) handlePrivacy(w http.ResponseWriter, r *http.Request) {
+	component := pages.Privacy()
+	err := component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (s *Server) handleTerms(w http.ResponseWriter, r *http.Request) {
+	component := pages.Terms()
+	err := component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (s *Server) handleTalkDetail(w http.ResponseWriter, r *http.Request) {
+	// Handle /talks/{slug}/deck
+	path := strings.TrimPrefix(r.URL.Path, "/talks/")
+	if strings.HasSuffix(path, "/deck") {
+		slug := strings.TrimSuffix(path, "/deck")
+		if slug == "" {
+			http.NotFound(w, r)
+			return
+		}
+		component := pages.DeckViewer(slug)
+		err := component.Render(r.Context(), w)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
+	http.NotFound(w, r)
 }
 
 func (s *Server) handleRSS(w http.ResponseWriter, r *http.Request) {

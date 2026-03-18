@@ -1,0 +1,65 @@
+package pages
+
+import "github.com/eltrovert/porto/templates/layouts"
+
+templ Terms() {
+	@layouts.PageCentered("Terms of Service", "") {
+		<div class="pb-24">
+			<!-- Header -->
+			<div class="text-center mb-16">
+				<div class="inline-flex p-3 rounded-full bg-white/5 border border-white/10 mb-6 text-accent">
+					<svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+						<polyline points="14 2 14 8 20 8"></polyline>
+						<line x1="16" y1="13" x2="8" y2="13"></line>
+						<line x1="16" y1="17" x2="8" y2="17"></line>
+						<polyline points="10 9 9 9 8 9"></polyline>
+					</svg>
+				</div>
+				<h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-4">
+					Terms of <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">Service</span>
+				</h1>
+			</div>
+
+			<!-- Content -->
+			<div class="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 md:p-12 space-y-8">
+				<section class="space-y-4">
+					<h2 class="text-2xl font-bold text-white flex items-center gap-2">
+						<svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"></circle>
+							<path d="M14.83 14.83a4 4 0 1 1 0-5.66"></path>
+						</svg>
+						Intellectual Property
+					</h2>
+					<div class="text-gray-400 leading-relaxed space-y-4">
+						<p>
+							The content on this website (text, images, code snippets, and project descriptions) is the intellectual property of El Muhammad, unless otherwise noted or attributed to open source licenses.
+						</p>
+						<p>
+							You are free to use the open-source code snippets provided in the blog posts under the MIT License, provided proper attribution is given.
+						</p>
+					</div>
+				</section>
+
+				<section class="space-y-4">
+					<h2 class="text-2xl font-bold text-white flex items-center gap-2">
+						<svg class="w-5 h-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+							<line x1="12" y1="9" x2="12" y2="13"></line>
+							<line x1="12" y1="17" x2="12.01" y2="17"></line>
+						</svg>
+						Disclaimer
+					</h2>
+					<div class="text-gray-400 leading-relaxed space-y-4">
+						<p>
+							The information provided on this portfolio is for educational and informational purposes only. While I strive for accuracy, technology changes rapidly. I am not liable for any errors or omissions, or for any losses, injuries, or damages arising from the display or use of this information.
+						</p>
+						<p>
+							Code snippets are provided "as is" without warranty of any kind. Use them in production environments at your own risk.
+						</p>
+					</div>
+				</section>
+			</div>
+		</div>
+	}
+}

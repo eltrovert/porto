@@ -10,6 +10,13 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "strconv"
 
+func orbitDirection(reverse bool) string {
+	if reverse {
+		return " reverse"
+	}
+	return ""
+}
+
 // AbstractVisual creates the complex 3D cosmic visual effect with orbital elements
 func AbstractVisual() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -157,7 +164,7 @@ func UniverseNode(top, left, delay string) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("top: " + top + "; left: " + left + "; animation-delay: " + delay + ";")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 88, Col: 81}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 95, Col: 81}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -172,6 +179,7 @@ func UniverseNode(top, left, delay string) templ.Component {
 }
 
 // OrbitIcon creates an orbiting icon around the center
+// Outer div rotates (normal or reverse). Inner div counter-rotates to keep icon upright.
 func OrbitIcon(radius, duration, delay int, icon templ.Component, reverse bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -193,23 +201,37 @@ func OrbitIcon(radius, duration, delay int, icon templ.Component, reverse bool) 
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div class=\"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-orbit-spin\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div class=\"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("width: " + strconv.Itoa(radius*2) + "px; " +
 			"height: " + strconv.Itoa(radius*2) + "px; " +
-			"animation-duration: " + strconv.Itoa(duration) + "s; " +
-			"animation-delay: " + strconv.Itoa(delay) + "s;")
+			"animation: spin " + strconv.Itoa(duration) + "s linear infinite" + orbitDirection(reverse) + "; " +
+			"animation-delay: -" + strconv.Itoa(delay) + "s; " +
+			"transform-style: preserve-3d;")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 100, Col: 51}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 109, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"><div class=\"absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2\"><div class=\"bg-dark p-2 rounded-full border border-white/10 shadow-xl hover:border-accent hover:scale-110 transition-all cursor-pointer z-20 relative\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\"><div class=\"absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2\" style=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("animation: spin " + strconv.Itoa(duration) + "s linear infinite" + orbitDirection(!reverse) + ";")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 115, Col: 102}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\"><div class=\"bg-dark p-2 rounded-full border border-white/10 shadow-xl hover:border-accent hover:scale-110 transition-all cursor-pointer z-20 relative\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -217,7 +239,7 @@ func OrbitIcon(radius, duration, delay int, icon templ.Component, reverse bool) 
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -242,43 +264,43 @@ func FloatingCard(className string, delay int, content templ.Component) templ.Co
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var6 == nil {
-			templ_7745c5c3_Var6 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var7 = []any{className + " animate-float-slow"}
-		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var7...)
+		var templ_7745c5c3_Var8 = []any{className + " animate-float-slow"}
+		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var8...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<div class=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var7).String())
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 1, Col: 0}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div class=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("animation-delay: " + strconv.Itoa(delay) + "s;")
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var8).String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 115, Col: 58}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 1, Col: 0}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "\" style=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var10 string
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues("animation-delay: " + strconv.Itoa(delay) + "s;")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 129, Col: 58}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -286,7 +308,7 @@ func FloatingCard(className string, delay int, content templ.Component) templ.Co
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -311,38 +333,38 @@ func KubernetesIcon(size int) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var10 == nil {
-			templ_7745c5c3_Var10 = templ.NopComponent
+		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var11 == nil {
+			templ_7745c5c3_Var11 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<svg width=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 124, Col: 32}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "\" height=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<svg width=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var12 string
 		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 124, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 138, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#326ce5\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle> <path d=\"M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\"></path> <path d=\"M12 2v4\"></path><path d=\"M12 18v4\"></path> <path d=\"M4.93 4.93l2.83 2.83\"></path><path d=\"M16.24 16.24l2.83 2.83\"></path> <path d=\"M2 12h4\"></path><path d=\"M18 12h4\"></path> <path d=\"M4.93 19.07l2.83-2.83\"></path><path d=\"M16.24 7.76l2.83-2.83\"></path></svg>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "\" height=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var13 string
+		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 138, Col: 62}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#326ce5\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle> <path d=\"M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\"></path> <path d=\"M12 2v4\"></path><path d=\"M12 18v4\"></path> <path d=\"M4.93 4.93l2.83 2.83\"></path><path d=\"M16.24 16.24l2.83 2.83\"></path> <path d=\"M2 12h4\"></path><path d=\"M18 12h4\"></path> <path d=\"M4.93 19.07l2.83-2.83\"></path><path d=\"M16.24 7.76l2.83-2.83\"></path></svg>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -366,38 +388,38 @@ func DockerIcon(size int) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var13 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var13 == nil {
-			templ_7745c5c3_Var13 = templ.NopComponent
+		templ_7745c5c3_Var14 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var14 == nil {
+			templ_7745c5c3_Var14 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<svg width=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var14 string
-		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 135, Col: 32}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "\" height=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<svg width=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var15 string
 		templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 135, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 149, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#0db7ed\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z\"></path> <path d=\"M12 10a6 6 0 0 0-6-6H4a2 2 0 0 0-2 2v2\"></path> <path d=\"M22 13h-4.5\"></path> <rect x=\"2\" y=\"10\" width=\"20\" height=\"8\" rx=\"2\"></rect> <circle cx=\"6\" cy=\"14\" r=\"1\" fill=\"currentColor\"></circle> <circle cx=\"10\" cy=\"14\" r=\"1\" fill=\"currentColor\"></circle> <circle cx=\"14\" cy=\"14\" r=\"1\" fill=\"currentColor\"></circle></svg>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "\" height=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var16 string
+		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 149, Col: 62}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#0db7ed\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z\"></path> <path d=\"M12 10a6 6 0 0 0-6-6H4a2 2 0 0 0-2 2v2\"></path> <path d=\"M22 13h-4.5\"></path> <rect x=\"2\" y=\"10\" width=\"20\" height=\"8\" rx=\"2\"></rect> <circle cx=\"6\" cy=\"14\" r=\"1\" fill=\"currentColor\"></circle> <circle cx=\"10\" cy=\"14\" r=\"1\" fill=\"currentColor\"></circle> <circle cx=\"14\" cy=\"14\" r=\"1\" fill=\"currentColor\"></circle></svg>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -421,38 +443,38 @@ func TerraformIcon(size int) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var16 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var16 == nil {
-			templ_7745c5c3_Var16 = templ.NopComponent
+		templ_7745c5c3_Var17 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var17 == nil {
+			templ_7745c5c3_Var17 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<svg width=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var17 string
-		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 147, Col: 32}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "\" height=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "<svg width=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var18 string
 		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 147, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 161, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#7b42bc\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 8l8-4l8 4v8l-8 4l-8-4z\"></path> <path d=\"M12 4v16\"></path> <path d=\"M4 8l8 4l8-4\"></path></svg>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" height=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var19 string
+		templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(size))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/cosmic_bg.templ`, Line: 161, Col: 62}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#7b42bc\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 8l8-4l8 4v8l-8 4l-8-4z\"></path> <path d=\"M12 4v16\"></path> <path d=\"M4 8l8 4l8-4\"></path></svg>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -476,12 +498,12 @@ func ActivityIcon() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var19 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var19 == nil {
-			templ_7745c5c3_Var19 = templ.NopComponent
+		templ_7745c5c3_Var20 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var20 == nil {
+			templ_7745c5c3_Var20 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "<div class=\"p-2 bg-dark border border-white/20 rounded-lg\"><svg class=\"w-5 h-5 text-green-400\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"22,12 18,12 15,21 9,3 6,12 2,12\"></polyline></svg></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<div class=\"p-2 bg-dark border border-white/20 rounded-lg\"><svg class=\"w-5 h-5 text-green-400\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"22,12 18,12 15,21 9,3 6,12 2,12\"></polyline></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -505,12 +527,12 @@ func GitBranchIcon() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var20 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var20 == nil {
-			templ_7745c5c3_Var20 = templ.NopComponent
+		templ_7745c5c3_Var21 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var21 == nil {
+			templ_7745c5c3_Var21 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "<div class=\"p-2 bg-dark border border-white/20 rounded-lg\"><svg class=\"w-6 h-6 text-[#f05032]\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"6\" y1=\"3\" x2=\"6\" y2=\"15\"></line> <circle cx=\"18\" cy=\"6\" r=\"3\"></circle> <circle cx=\"6\" cy=\"18\" r=\"3\"></circle> <path d=\"M18 9a9 9 0 0 1-9 9\"></path></svg></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<div class=\"p-2 bg-dark border border-white/20 rounded-lg\"><svg class=\"w-6 h-6 text-[#f05032]\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"6\" y1=\"3\" x2=\"6\" y2=\"15\"></line> <circle cx=\"18\" cy=\"6\" r=\"3\"></circle> <circle cx=\"6\" cy=\"18\" r=\"3\"></circle> <path d=\"M18 9a9 9 0 0 1-9 9\"></path></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -534,12 +556,12 @@ func SettingsIcon() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var21 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var21 == nil {
-			templ_7745c5c3_Var21 = templ.NopComponent
+		templ_7745c5c3_Var22 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var22 == nil {
+			templ_7745c5c3_Var22 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<div class=\"p-2 bg-dark border border-white/20 rounded-lg\"><svg class=\"w-6 h-6 text-white\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"3\"></circle> <path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z\"></path></svg></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "<div class=\"p-2 bg-dark border border-white/20 rounded-lg\"><svg class=\"w-6 h-6 text-white\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"3\"></circle> <path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z\"></path></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -564,12 +586,12 @@ func AWSResourceCard() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var22 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var22 == nil {
-			templ_7745c5c3_Var22 = templ.NopComponent
+		templ_7745c5c3_Var23 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var23 == nil {
+			templ_7745c5c3_Var23 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "<div class=\"bg-[#111] border border-white/10 rounded-xl p-4 shadow-2xl w-48 hover:border-accent/30 transition-all duration-300\" style=\"transform: translateZ(80px);\"><div class=\"flex gap-1.5 mb-3\"><div class=\"w-2.5 h-2.5 rounded-full bg-[#ff5f56]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#ffbd2e]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#27c93f]\"></div></div><div class=\"space-y-1.5\"><div class=\"h-2 bg-white/20 rounded w-1/3\"></div><div class=\"h-2 bg-white/10 rounded w-3/4\"></div><div class=\"h-2 bg-white/10 rounded w-1/2\"></div></div><div class=\"mt-3 flex items-center gap-2\"><svg class=\"w-4 h-4 text-accent\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\"></path></svg> <span class=\"text-[10px] text-gray-400 font-mono\">aws_eks_cluster</span></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "<div class=\"bg-[#111] border border-white/10 rounded-xl p-4 shadow-2xl w-48 hover:border-accent/30 transition-all duration-300\" style=\"transform: translateZ(80px);\"><div class=\"flex gap-1.5 mb-3\"><div class=\"w-2.5 h-2.5 rounded-full bg-[#ff5f56]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#ffbd2e]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#27c93f]\"></div></div><div class=\"space-y-1.5\"><div class=\"h-2 bg-white/20 rounded w-1/3\"></div><div class=\"h-2 bg-white/10 rounded w-3/4\"></div><div class=\"h-2 bg-white/10 rounded w-1/2\"></div></div><div class=\"mt-3 flex items-center gap-2\"><svg class=\"w-4 h-4 text-accent\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\"></path></svg> <span class=\"text-[10px] text-gray-400 font-mono\">aws_eks_cluster</span></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -593,12 +615,12 @@ func TerminalLogCard() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var23 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var23 == nil {
-			templ_7745c5c3_Var23 = templ.NopComponent
+		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var24 == nil {
+			templ_7745c5c3_Var24 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "<div class=\"bg-[#111] border border-white/10 rounded-xl p-4 shadow-2xl w-44 hover:border-accent/30 transition-all duration-300\" style=\"transform: translateZ(60px);\"><div class=\"flex items-center gap-2 mb-2 border-b border-white/5 pb-2\"><svg class=\"w-3 h-3 text-gray-500\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"4,17 10,11 4,5\"></polyline> <line x1=\"12\" y1=\"19\" x2=\"20\" y2=\"19\"></line></svg> <span class=\"text-[10px] text-gray-500 font-mono\">server.log</span></div><div class=\"font-mono text-[8px] space-y-1 text-green-400/80\"><div>&gt; npm start</div><div class=\"text-gray-400\">Starting service...</div><div>✓ Connected to DB</div><div class=\"animate-pulse\">_</div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<div class=\"bg-[#111] border border-white/10 rounded-xl p-4 shadow-2xl w-44 hover:border-accent/30 transition-all duration-300\" style=\"transform: translateZ(60px);\"><div class=\"flex items-center gap-2 mb-2 border-b border-white/5 pb-2\"><svg class=\"w-3 h-3 text-gray-500\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"4,17 10,11 4,5\"></polyline> <line x1=\"12\" y1=\"19\" x2=\"20\" y2=\"19\"></line></svg> <span class=\"text-[10px] text-gray-500 font-mono\">server.log</span></div><div class=\"font-mono text-[8px] space-y-1 text-green-400/80\"><div>&gt; npm start</div><div class=\"text-gray-400\">Starting service...</div><div>✓ Connected to DB</div><div class=\"animate-pulse\">_</div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -622,12 +644,12 @@ func K8sManifestCard() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var24 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var24 == nil {
-			templ_7745c5c3_Var24 = templ.NopComponent
+		templ_7745c5c3_Var25 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var25 == nil {
+			templ_7745c5c3_Var25 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "<div class=\"bg-[#111] border border-white/10 rounded-xl p-4 shadow-2xl w-52 hover:border-accent/30 transition-all duration-300\" style=\"transform: translateZ(100px);\"><div class=\"flex gap-1.5 mb-3\"><div class=\"w-2.5 h-2.5 rounded-full bg-[#ff5f56]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#ffbd2e]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#27c93f]\"></div></div><div class=\"space-y-1.5 font-mono text-[8px] text-gray-500\"><div class=\"flex\"><span class=\"text-purple-400\">apiVersion:</span>&nbsp;apps/v1</div><div class=\"flex\"><span class=\"text-purple-400\">kind:</span>&nbsp;Deployment</div><div class=\"flex pl-2\"><span class=\"text-blue-400\">name:</span>&nbsp;prod-api</div></div><div class=\"mt-3 flex items-center gap-2\"><svg class=\"w-4 h-4 text-blue-500\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"></path> <polyline points=\"3.27,6.96 12,12.01 20.73,6.96\"></polyline> <line x1=\"12\" y1=\"22.08\" x2=\"12\" y2=\"12\"></line></svg> <span class=\"text-[10px] text-gray-400 font-mono\">deployment.yaml</span></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "<div class=\"bg-[#111] border border-white/10 rounded-xl p-4 shadow-2xl w-52 hover:border-accent/30 transition-all duration-300\" style=\"transform: translateZ(100px);\"><div class=\"flex gap-1.5 mb-3\"><div class=\"w-2.5 h-2.5 rounded-full bg-[#ff5f56]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#ffbd2e]\"></div><div class=\"w-2.5 h-2.5 rounded-full bg-[#27c93f]\"></div></div><div class=\"space-y-1.5 font-mono text-[8px] text-gray-500\"><div class=\"flex\"><span class=\"text-purple-400\">apiVersion:</span>&nbsp;apps/v1</div><div class=\"flex\"><span class=\"text-purple-400\">kind:</span>&nbsp;Deployment</div><div class=\"flex pl-2\"><span class=\"text-blue-400\">name:</span>&nbsp;prod-api</div></div><div class=\"mt-3 flex items-center gap-2\"><svg class=\"w-4 h-4 text-blue-500\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"></path> <polyline points=\"3.27,6.96 12,12.01 20.73,6.96\"></polyline> <line x1=\"12\" y1=\"22.08\" x2=\"12\" y2=\"12\"></line></svg> <span class=\"text-[10px] text-gray-400 font-mono\">deployment.yaml</span></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -652,12 +674,12 @@ func CosmicBackground() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var25 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var25 == nil {
-			templ_7745c5c3_Var25 = templ.NopComponent
+		templ_7745c5c3_Var26 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var26 == nil {
+			templ_7745c5c3_Var26 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "<div class=\"fixed inset-0 z-0 overflow-hidden pointer-events-none\"><!-- Nebula Gradients (subtle, behind content) --><div class=\"absolute top-[-300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ffcf0d]/10 rounded-full blur-[180px] opacity-20\"></div><div class=\"absolute top-[30%] right-[-5%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[180px] opacity-15\"></div><div class=\"absolute bottom-[-5%] left-[-5%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[180px] opacity-15\"></div><!-- Stars & Texture --><div class=\"absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.05]\"></div><div class=\"absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02]\"></div><!-- Floating Debris --><div class=\"absolute top-[20%] left-[10%] w-1.5 h-1.5 bg-yellow-200/20 rounded-full animate-float-slow shadow-[0_0_10px_rgba(255,207,13,0.5)]\"></div><div class=\"absolute top-[60%] right-[15%] w-2 h-2 bg-white/10 rounded-full animate-float-medium\"></div><div class=\"absolute bottom-[20%] left-[20%] w-1 h-1 bg-white/10 rounded-full animate-ping\"></div><!-- Hazy Orbital Tracks --><svg class=\"absolute inset-0 w-full h-full opacity-40\" viewBox=\"0 0 1440 2200\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"orbitGradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"transparent\"></stop> <stop offset=\"50%\" stop-color=\"white\"></stop> <stop offset=\"100%\" stop-color=\"transparent\"></stop></linearGradient> <linearGradient id=\"cometGradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"transparent\"></stop> <stop offset=\"50%\" stop-color=\"#ffcf0d\"></stop> <stop offset=\"100%\" stop-color=\"transparent\"></stop></linearGradient></defs> <path d=\"M -200 600 Q 720 -200 1640 600\" fill=\"none\" stroke=\"url(#orbitGradient)\" stroke-width=\"1\" class=\"opacity-30\"></path> <path d=\"M 100 -100 Q 400 800 100 2000\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" class=\"opacity-20\" stroke-dasharray=\"5 10\"></path> <ellipse cx=\"720\" cy=\"1200\" rx=\"900\" ry=\"400\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" class=\"opacity-15 rotate-[-15deg] origin-center\"></ellipse> <path d=\"M -200 600 Q 720 -200 1640 600\" fill=\"none\" stroke=\"url(#cometGradient)\" stroke-width=\"2\" class=\"animate-comet-1\" stroke-dasharray=\"100 2000\" stroke-linecap=\"round\"></path> <circle cx=\"1200\" cy=\"400\" r=\"1.5\" fill=\"white\" class=\"opacity-60\"></circle> <circle cx=\"200\" cy=\"900\" r=\"2\" fill=\"white\" class=\"opacity-40\"></circle></svg></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "<div class=\"fixed inset-0 z-0 overflow-hidden pointer-events-none\"><!-- Nebula Gradients (subtle, behind content) --><div class=\"absolute top-[-300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ffcf0d]/10 rounded-full blur-[180px] opacity-20\"></div><div class=\"absolute top-[30%] right-[-5%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[180px] opacity-15\"></div><div class=\"absolute bottom-[-5%] left-[-5%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[180px] opacity-15\"></div><!-- Stars & Texture --><div class=\"absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.05]\"></div><div class=\"absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02]\"></div><!-- Floating Debris --><div class=\"absolute top-[20%] left-[10%] w-1.5 h-1.5 bg-yellow-200/20 rounded-full animate-float-slow shadow-[0_0_10px_rgba(255,207,13,0.5)]\"></div><div class=\"absolute top-[60%] right-[15%] w-2 h-2 bg-white/10 rounded-full animate-float-medium\"></div><div class=\"absolute bottom-[20%] left-[20%] w-1 h-1 bg-white/10 rounded-full animate-ping\"></div><!-- Hazy Orbital Tracks --><svg class=\"absolute inset-0 w-full h-full opacity-40\" viewBox=\"0 0 1440 2200\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"orbitGradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"transparent\"></stop> <stop offset=\"50%\" stop-color=\"white\"></stop> <stop offset=\"100%\" stop-color=\"transparent\"></stop></linearGradient> <linearGradient id=\"cometGradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"transparent\"></stop> <stop offset=\"50%\" stop-color=\"#ffcf0d\"></stop> <stop offset=\"100%\" stop-color=\"transparent\"></stop></linearGradient></defs> <path d=\"M -200 600 Q 720 -200 1640 600\" fill=\"none\" stroke=\"url(#orbitGradient)\" stroke-width=\"1\" class=\"opacity-30\"></path> <path d=\"M 100 -100 Q 400 800 100 2000\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" class=\"opacity-20\" stroke-dasharray=\"5 10\"></path> <ellipse cx=\"720\" cy=\"1200\" rx=\"900\" ry=\"400\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" class=\"opacity-15 rotate-[-15deg] origin-center\"></ellipse> <path d=\"M -200 600 Q 720 -200 1640 600\" fill=\"none\" stroke=\"url(#cometGradient)\" stroke-width=\"2\" class=\"animate-comet-1\" stroke-dasharray=\"100 2000\" stroke-linecap=\"round\"></path> <circle cx=\"1200\" cy=\"400\" r=\"1.5\" fill=\"white\" class=\"opacity-60\"></circle> <circle cx=\"200\" cy=\"900\" r=\"2\" fill=\"white\" class=\"opacity-40\"></circle></svg></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

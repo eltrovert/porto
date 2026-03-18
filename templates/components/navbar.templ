@@ -89,8 +89,7 @@ templ Navbar(activeNav string) {
 					<!-- Mega Menu Dropdown -->
 					<div
 						id="mega-menu"
-						class="absolute top-full mt-2 w-[900px] bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl z-50 p-6 opacity-0 invisible transition-all duration-200"
-						style="right: -100px;"
+						class="absolute top-full mt-2 w-[900px] right-0 -translate-x-0 lg:-right-[200px] bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl z-50 p-6 opacity-0 invisible transition-all duration-200"
 					>
 						<div class="grid grid-cols-3 gap-6 font-mono">
 
@@ -279,6 +278,10 @@ templ Navbar(activeNav string) {
 			icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>`;
 		}
 
+		function scrollToTop() {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
+
 		// Initialize scroll listener
 		window.addEventListener('scroll', handleScroll, { passive: true });
 	</script>
@@ -323,7 +326,9 @@ templ MenuList(title, description string, icon templ.Component, href string) {
 		onclick="hideMegaMenuNow(); scrollToTop();"
 	>
 		<div class="flex items-center space-x-2 text-white font-bold mb-1">
-			<span class="text-accent">@icon</span>
+			<span class="text-accent">
+				@icon
+			</span>
 			<span class="text-sm font-mono">{ title }</span>
 		</div>
 		<p class="text-[10px] text-gray-400 font-sans opacity-0 group-hover:opacity-100 transition-opacity duration-300">{ description }</p>

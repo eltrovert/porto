@@ -168,7 +168,7 @@ func Navbar(activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" id=\"more-button\"><span>More</span> <svg class=\"w-3 h-3 ml-2 transition-transform duration-200\" id=\"more-chevron\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></button><!-- Mega Menu Dropdown --><div id=\"mega-menu\" class=\"absolute top-full mt-2 w-[900px] bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl z-50 p-6 opacity-0 invisible transition-all duration-200\" style=\"right: -100px;\"><div class=\"grid grid-cols-3 gap-6 font-mono\"><!-- Column 1 --><div class=\"space-y-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "\" id=\"more-button\"><span>More</span> <svg class=\"w-3 h-3 ml-2 transition-transform duration-200\" id=\"more-chevron\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></button><!-- Mega Menu Dropdown --><div id=\"mega-menu\" class=\"absolute top-full mt-2 w-[900px] right-0 -translate-x-0 lg:-right-[200px] bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl z-50 p-6 opacity-0 invisible transition-all duration-200\"><div class=\"grid grid-cols-3 gap-6 font-mono\"><!-- Column 1 --><div class=\"space-y-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -347,7 +347,7 @@ func Navbar(activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" onclick=\"closeMobileMenu()\">About</a><!-- Mobile Extra Links (Simplified) --><a href=\"/uses\" hx-get=\"/uses\" hx-target=\"body\" hx-push-url=\"true\" class=\"text-gray-300 hover:text-white p-4 border-b border-white/5\" onclick=\"closeMobileMenu()\">device_uses.json</a> <a href=\"/life\" hx-get=\"/life\" hx-target=\"body\" hx-push-url=\"true\" class=\"text-gray-300 hover:text-white p-4 border-b border-white/5\" onclick=\"closeMobileMenu()\">life_outside.tech</a> <a href=\"/books\" hx-get=\"/books\" hx-target=\"body\" hx-push-url=\"true\" class=\"text-gray-300 hover:text-white p-4\" onclick=\"closeMobileMenu()\">library/</a></div></nav><script>\n\t\tlet isNavVisible = true;\n\t\tlet lastScrollY = 0;\n\t\tlet megaMenuTimeout = null;\n\n\t\t// Handle Scroll Visibility\n\t\tfunction handleScroll() {\n\t\t\tconst currentScrollY = window.scrollY;\n\t\t\tconst navbar = document.getElementById('main-navbar');\n\n\t\t\t// Always show at the very top\n\t\t\tif (currentScrollY < 50) {\n\t\t\t\tshowNavbar();\n\t\t\t} else if (currentScrollY > lastScrollY + 10) {\n\t\t\t\t// Scrolling Down -> Hide\n\t\t\t\thideNavbar();\n\t\t\t\thideMegaMenuNow();\n\t\t\t}\n\n\t\t\tlastScrollY = currentScrollY;\n\t\t}\n\n\t\tfunction showNavbar() {\n\t\t\tconst navbar = document.getElementById('main-navbar');\n\t\t\tnavbar.style.transform = 'translateY(0)';\n\t\t\tisNavVisible = true;\n\t\t}\n\n\t\tfunction hideNavbar() {\n\t\t\tconst navbar = document.getElementById('main-navbar');\n\t\t\tnavbar.style.transform = 'translateY(-100%)';\n\t\t\tisNavVisible = false;\n\t\t}\n\n\t\tfunction showMegaMenu() {\n\t\t\tif (megaMenuTimeout) clearTimeout(megaMenuTimeout);\n\t\t\tconst megaMenu = document.getElementById('mega-menu');\n\t\t\tconst button = document.getElementById('more-button');\n\t\t\tconst chevron = document.getElementById('more-chevron');\n\n\t\t\tmegaMenu.classList.remove('opacity-0', 'invisible');\n\t\t\tmegaMenu.classList.add('opacity-100', 'visible');\n\t\t\tbutton.classList.add('bg-white/10', 'text-white');\n\t\t\tbutton.classList.remove('text-gray-400');\n\t\t\tchevron.style.transform = 'rotate(180deg)';\n\t\t}\n\n\t\tfunction hideMegaMenu() {\n\t\t\tmegaMenuTimeout = setTimeout(() => {\n\t\t\t\thideMegaMenuNow();\n\t\t\t}, 150);\n\t\t}\n\n\t\tfunction hideMegaMenuNow() {\n\t\t\tconst megaMenu = document.getElementById('mega-menu');\n\t\t\tconst button = document.getElementById('more-button');\n\t\t\tconst chevron = document.getElementById('more-chevron');\n\n\t\t\tmegaMenu.classList.add('opacity-0', 'invisible');\n\t\t\tmegaMenu.classList.remove('opacity-100', 'visible');\n\t\t\tbutton.classList.remove('bg-white/10', 'text-white');\n\t\t\tbutton.classList.add('text-gray-400');\n\t\t\tchevron.style.transform = 'rotate(0deg)';\n\t\t}\n\n\t\tfunction toggleMobileMenu() {\n\t\t\tconst menu = document.getElementById('mobile-menu');\n\t\t\tconst icon = document.getElementById('menu-icon');\n\n\t\t\tif (menu.classList.contains('invisible')) {\n\t\t\t\tmenu.classList.remove('opacity-0', 'invisible');\n\t\t\t\tmenu.classList.add('opacity-100', 'flex');\n\t\t\t\ticon.innerHTML = `<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\"></path>`;\n\t\t\t} else {\n\t\t\t\tcloseMobileMenu();\n\t\t\t}\n\t\t}\n\n\t\tfunction closeMobileMenu() {\n\t\t\tconst menu = document.getElementById('mobile-menu');\n\t\t\tconst icon = document.getElementById('menu-icon');\n\n\t\t\tmenu.classList.add('opacity-0', 'invisible');\n\t\t\tmenu.classList.remove('opacity-100', 'flex');\n\t\t\ticon.innerHTML = `<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h16M4 18h16\"></path>`;\n\t\t}\n\n\t\t// Initialize scroll listener\n\t\twindow.addEventListener('scroll', handleScroll, { passive: true });\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "\" onclick=\"closeMobileMenu()\">About</a><!-- Mobile Extra Links (Simplified) --><a href=\"/uses\" hx-get=\"/uses\" hx-target=\"body\" hx-push-url=\"true\" class=\"text-gray-300 hover:text-white p-4 border-b border-white/5\" onclick=\"closeMobileMenu()\">device_uses.json</a> <a href=\"/life\" hx-get=\"/life\" hx-target=\"body\" hx-push-url=\"true\" class=\"text-gray-300 hover:text-white p-4 border-b border-white/5\" onclick=\"closeMobileMenu()\">life_outside.tech</a> <a href=\"/books\" hx-get=\"/books\" hx-target=\"body\" hx-push-url=\"true\" class=\"text-gray-300 hover:text-white p-4\" onclick=\"closeMobileMenu()\">library/</a></div></nav><script>\n\t\tlet isNavVisible = true;\n\t\tlet lastScrollY = 0;\n\t\tlet megaMenuTimeout = null;\n\n\t\t// Handle Scroll Visibility\n\t\tfunction handleScroll() {\n\t\t\tconst currentScrollY = window.scrollY;\n\t\t\tconst navbar = document.getElementById('main-navbar');\n\n\t\t\t// Always show at the very top\n\t\t\tif (currentScrollY < 50) {\n\t\t\t\tshowNavbar();\n\t\t\t} else if (currentScrollY > lastScrollY + 10) {\n\t\t\t\t// Scrolling Down -> Hide\n\t\t\t\thideNavbar();\n\t\t\t\thideMegaMenuNow();\n\t\t\t}\n\n\t\t\tlastScrollY = currentScrollY;\n\t\t}\n\n\t\tfunction showNavbar() {\n\t\t\tconst navbar = document.getElementById('main-navbar');\n\t\t\tnavbar.style.transform = 'translateY(0)';\n\t\t\tisNavVisible = true;\n\t\t}\n\n\t\tfunction hideNavbar() {\n\t\t\tconst navbar = document.getElementById('main-navbar');\n\t\t\tnavbar.style.transform = 'translateY(-100%)';\n\t\t\tisNavVisible = false;\n\t\t}\n\n\t\tfunction showMegaMenu() {\n\t\t\tif (megaMenuTimeout) clearTimeout(megaMenuTimeout);\n\t\t\tconst megaMenu = document.getElementById('mega-menu');\n\t\t\tconst button = document.getElementById('more-button');\n\t\t\tconst chevron = document.getElementById('more-chevron');\n\n\t\t\tmegaMenu.classList.remove('opacity-0', 'invisible');\n\t\t\tmegaMenu.classList.add('opacity-100', 'visible');\n\t\t\tbutton.classList.add('bg-white/10', 'text-white');\n\t\t\tbutton.classList.remove('text-gray-400');\n\t\t\tchevron.style.transform = 'rotate(180deg)';\n\t\t}\n\n\t\tfunction hideMegaMenu() {\n\t\t\tmegaMenuTimeout = setTimeout(() => {\n\t\t\t\thideMegaMenuNow();\n\t\t\t}, 150);\n\t\t}\n\n\t\tfunction hideMegaMenuNow() {\n\t\t\tconst megaMenu = document.getElementById('mega-menu');\n\t\t\tconst button = document.getElementById('more-button');\n\t\t\tconst chevron = document.getElementById('more-chevron');\n\n\t\t\tmegaMenu.classList.add('opacity-0', 'invisible');\n\t\t\tmegaMenu.classList.remove('opacity-100', 'visible');\n\t\t\tbutton.classList.remove('bg-white/10', 'text-white');\n\t\t\tbutton.classList.add('text-gray-400');\n\t\t\tchevron.style.transform = 'rotate(0deg)';\n\t\t}\n\n\t\tfunction toggleMobileMenu() {\n\t\t\tconst menu = document.getElementById('mobile-menu');\n\t\t\tconst icon = document.getElementById('menu-icon');\n\n\t\t\tif (menu.classList.contains('invisible')) {\n\t\t\t\tmenu.classList.remove('opacity-0', 'invisible');\n\t\t\t\tmenu.classList.add('opacity-100', 'flex');\n\t\t\t\ticon.innerHTML = `<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\"></path>`;\n\t\t\t} else {\n\t\t\t\tcloseMobileMenu();\n\t\t\t}\n\t\t}\n\n\t\tfunction closeMobileMenu() {\n\t\t\tconst menu = document.getElementById('mobile-menu');\n\t\t\tconst icon = document.getElementById('menu-icon');\n\n\t\t\tmenu.classList.add('opacity-0', 'invisible');\n\t\t\tmenu.classList.remove('opacity-100', 'flex');\n\t\t\ticon.innerHTML = `<path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h16M4 18h16\"></path>`;\n\t\t}\n\n\t\tfunction scrollToTop() {\n\t\t\twindow.scrollTo({ top: 0, behavior: 'smooth' });\n\t\t}\n\n\t\t// Initialize scroll listener\n\t\twindow.addEventListener('scroll', handleScroll, { passive: true });\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -389,7 +389,7 @@ func MenuCard(title, description, image, height, href string) templ.Component {
 		var templ_7745c5c3_Var26 templ.SafeURL
 		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(href))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 290, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 293, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 		if templ_7745c5c3_Err != nil {
@@ -402,7 +402,7 @@ func MenuCard(title, description, image, height, href string) templ.Component {
 		var templ_7745c5c3_Var27 string
 		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs(href)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 291, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 294, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
 		if templ_7745c5c3_Err != nil {
@@ -428,7 +428,7 @@ func MenuCard(title, description, image, height, href string) templ.Component {
 		var templ_7745c5c3_Var29 string
 		templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs(image)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 299, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 302, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 		if templ_7745c5c3_Err != nil {
@@ -441,7 +441,7 @@ func MenuCard(title, description, image, height, href string) templ.Component {
 		var templ_7745c5c3_Var30 string
 		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 300, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 303, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 		if templ_7745c5c3_Err != nil {
@@ -454,7 +454,7 @@ func MenuCard(title, description, image, height, href string) templ.Component {
 		var templ_7745c5c3_Var31 string
 		templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 308, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 311, Col: 43}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 		if templ_7745c5c3_Err != nil {
@@ -467,7 +467,7 @@ func MenuCard(title, description, image, height, href string) templ.Component {
 		var templ_7745c5c3_Var32 string
 		templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs(description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 310, Col: 129}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 313, Col: 129}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
 		if templ_7745c5c3_Err != nil {
@@ -510,7 +510,7 @@ func MenuList(title, description string, icon templ.Component, href string) temp
 		var templ_7745c5c3_Var34 templ.SafeURL
 		templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(href))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 318, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 321, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var34))
 		if templ_7745c5c3_Err != nil {
@@ -523,7 +523,7 @@ func MenuList(title, description string, icon templ.Component, href string) temp
 		var templ_7745c5c3_Var35 string
 		templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.JoinStringErrs(href)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 319, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 322, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var35))
 		if templ_7745c5c3_Err != nil {
@@ -544,7 +544,7 @@ func MenuList(title, description string, icon templ.Component, href string) temp
 		var templ_7745c5c3_Var36 string
 		templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 327, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 332, Col: 42}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var36))
 		if templ_7745c5c3_Err != nil {
@@ -557,7 +557,7 @@ func MenuList(title, description string, icon templ.Component, href string) temp
 		var templ_7745c5c3_Var37 string
 		templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.JoinStringErrs(description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 329, Col: 128}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/navbar.templ`, Line: 334, Col: 128}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var37))
 		if templ_7745c5c3_Err != nil {
