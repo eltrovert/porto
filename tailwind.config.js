@@ -2,7 +2,9 @@
 module.exports = {
   content: [
     "./templates/**/*.templ",
+    "./templates/**/*_templ.go",
     "./templates/**/*.html",
+    "./internal/**/*.go",
     "./static/**/*.js",
   ],
   theme: {

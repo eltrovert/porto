@@ -26,10 +26,10 @@ templ AbstractVisual() {
 		<div class="absolute inset-0 bg-accent/30 blur-[100px] rounded-full transform scale-75 opacity-60"></div>
 
 		<!-- Orbital Rings -->
-		<div class="absolute w-[500px] h-[500px] border border-white/5 rounded-full animate-[spin_60s_linear_infinite]" style="transform: translateZ(-50px);"></div>
-		<div class="absolute w-[420px] h-[420px] border border-white/5 rounded-full animate-[spin_50s_linear_infinite_reverse] opacity-50" style="transform: translateZ(-20px);"></div>
-		<div class="absolute w-[350px] h-[350px] border border-white/10 rounded-full animate-[spin_40s_linear_infinite_reverse]"></div>
-		<div class="absolute w-[220px] h-[220px] border border-accent/20 rounded-full animate-[spin_20s_linear_infinite]" style="transform: translateZ(20px);"></div>
+		<div class="absolute w-[500px] h-[500px] border border-white/5 rounded-full animate-orbit-60" style="transform: translateZ(-50px);"></div>
+		<div class="absolute w-[420px] h-[420px] border border-white/5 rounded-full animate-orbit-50-reverse opacity-50" style="transform: translateZ(-20px);"></div>
+		<div class="absolute w-[350px] h-[350px] border border-white/10 rounded-full animate-orbit-40-reverse"></div>
+		<div class="absolute w-[220px] h-[220px] border border-accent/20 rounded-full animate-orbit-20" style="transform: translateZ(20px);"></div>
 
 		<!-- Center Astronaut Avatar - Floating Animation -->
 		<div class="relative z-20 w-48 h-48 flex items-center justify-center animate-float-slow" style="transform: translateZ(50px);">
@@ -246,10 +246,10 @@ templ K8sManifestCard() {
 // Basic cosmic background for pages that don't need the full AbstractVisual
 templ CosmicBackground() {
 	<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-		<!-- Nebula Gradients -->
-		<div class="absolute top-[-300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ffcf0d]/30 rounded-full blur-[120px] opacity-40"></div>
-		<div class="absolute top-[30%] right-[-5%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] opacity-40"></div>
-		<div class="absolute bottom-[-5%] left-[-5%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] opacity-40"></div>
+		<!-- Nebula Gradients (subtle, behind content) -->
+		<div class="absolute top-[-300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ffcf0d]/10 rounded-full blur-[180px] opacity-20"></div>
+		<div class="absolute top-[30%] right-[-5%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[180px] opacity-15"></div>
+		<div class="absolute bottom-[-5%] left-[-5%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[180px] opacity-15"></div>
 
 		<!-- Stars & Texture -->
 		<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.05]"></div>

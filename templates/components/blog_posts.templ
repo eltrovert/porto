@@ -1,0 +1,110 @@
+package components
+
+import "strconv"
+
+templ BlogPosts() {
+	<section class="pt-8 pb-24 w-full bg-[#050505] relative z-10 overflow-hidden">
+
+		<!-- Subtle background effects -->
+		<div class="absolute inset-0 pointer-events-none">
+			<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/8 blur-[100px] rounded-full mix-blend-screen opacity-20"></div>
+			<div
+				class="absolute inset-0 z-0 opacity-[0.03]"
+				style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 40px 40px;"
+			></div>
+		</div>
+
+		<!-- Inner Container -->
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+			<!-- HIGHLIGHTED BLOG POSTS SECTION -->
+			<div class="mb-12">
+				<!-- Header with Terminal Style -->
+				<div class="mb-16 animate-on-scroll">
+					<h2 class="text-3xl md:text-5xl font-bold tracking-tight relative inline-block z-10 text-white font-mono flex items-center gap-3">
+						<span class="text-accent">>_</span>
+						Highlighted Blog Posts
+						<span class="inline-block w-3 h-8 bg-accent ml-2 animate-pulse"></span>
+					</h2>
+				</div>
+
+				<!-- List -->
+				<div class="space-y-16">
+					@BlogPostItem("December 10, 2024", "Scaling Kubernetes Clusters with Karpenter", "An in-depth guide on how to implement high-performance node autoscaling for EKS clusters using Karpenter, replacing the traditional Cluster Autoscaler.", "6 min read", "7,288 views", []string{"kubernetes", "scaling"}, "https://images.unsplash.com/photo-1667372393119-c81c0c60cf32?q=80&w=2000&auto=format&fit=crop", "/posts/scaling-kubernetes-clusters-with-karpenter", 100)
+					@BlogPostItem("March 03, 2024", "GitOps Patterns with ArgoCD", "A collection of advanced GitOps patterns including ApplicationSets, Generators, and multi-cluster management strategies for enterprise scale.", "10 min read", "8,777 views", []string{"gitops", "argocd"}, "https://images.unsplash.com/photo-1618401471353-b74afee0ba08?q=80&w=2000&auto=format&fit=crop", "/posts/gitops-patterns-with-argocd", 200)
+					@BlogPostItem("March 18, 2023", "Secure Multi-Cloud Networking", "Solving connectivity challenges such as VPC peering, transit gateways, and implementing zero-trust mesh networking across AWS and GCP.", "7 min read", "14,792 views", []string{"networking", "security"}, "https://images.unsplash.com/photo-1558494949-efc5e66cdc2f?q=80&w=2000&auto=format&fit=crop", "/posts/secure-multi-cloud-networking", 300)
+				</div>
+
+				<!-- View All Button -->
+				<div class="mt-16 text-center animate-on-scroll">
+					<a href="/posts" class="inline-flex items-center space-x-2 text-gray-300 hover:text-white transition-colors border border-white/10 hover:border-white/30 hover:bg-white/5 rounded-md px-8 py-3 text-sm font-medium tracking-wide backdrop-blur-sm font-mono uppercase">
+						<span>View All Archives</span>
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+}
+
+templ BlogPostItem(date string, title string, excerpt string, readTime string, views string, tags []string, image string, link string, delayMs int) {
+	<div class="group flex flex-col lg:flex-row gap-10 items-start border-b border-white/5 pb-16 last:border-0 relative animate-on-scroll" style={ "transition-delay: " + strconv.Itoa(delayMs) + "ms;" }>
+
+		<!-- Subtle row highlight on hover -->
+		<div class="absolute -inset-6 bg-white/0 group-hover:bg-white/[0.02] transition-colors duration-500 -z-10 rounded-lg"></div>
+
+		<!-- Content -->
+		<div class="flex-1 space-y-4">
+			<span class="text-sm text-accent font-medium tracking-wide font-mono">{ date }</span>
+
+			<a href={ templ.URL(link) } class="block">
+				<h3 class="text-3xl font-bold text-white group-hover:text-accent transition-colors duration-300 cursor-pointer leading-tight font-mono">
+					{ title }
+				</h3>
+			</a>
+
+			<p class="text-lg text-gray-400 leading-relaxed font-sans">
+				{ excerpt }
+			</p>
+
+			<!-- Metadata Row -->
+			<div class="flex flex-wrap items-center gap-6 pt-2 font-mono">
+				<div class="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-widest font-semibold">
+					<svg class="w-3 h-3 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10"></circle>
+						<polyline points="12 6 12 12 16 14"></polyline>
+					</svg>
+					<span>{ readTime }</span>
+				</div>
+				<div class="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-widest font-semibold">
+					<svg class="w-3 h-3 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+						<circle cx="12" cy="12" r="3"></circle>
+					</svg>
+					<span>{ views }</span>
+				</div>
+
+				<!-- Tags -->
+				<div class="flex gap-2 ml-auto">
+					for _, tag := range tags {
+						<span class="px-3 py-1 bg-white/5 rounded-sm text-xs font-medium text-accent border border-white/5 group-hover:border-accent/20 transition-colors">
+							#{ tag }
+						</span>
+					}
+				</div>
+			</div>
+		</div>
+
+		<!-- Thumbnail - Reduced size by ~30% -->
+		<a href={ templ.URL(link) } class="w-full lg:w-[280px] h-48 rounded-sm overflow-hidden bg-[#111] border border-white/10 shrink-0 shadow-lg relative group-hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] transition-all duration-500 block">
+			<div class="absolute inset-0 bg-accent/20 opacity-0 group-hover:opacity-20 transition-opacity duration-500 z-10"></div>
+			<img
+				src={ image }
+				alt={ title }
+				class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+			/>
+		</a>
+	</div>
+}

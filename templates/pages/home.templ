@@ -155,8 +155,11 @@ templ Home() {
 			</div>
 		</div>
 
-		<!-- Additional Sections would go here -->
-		<!-- TechHighlight, EngineeringSpotlight, BlogPosts, YearlyRetrospective -->
+		<!-- Additional Sections -->
+		@components.TechHighlight()
+		@components.EngineeringSpotlight()
+		@components.BlogPosts()
+		@components.YearlyRetrospective()
 
 		<script>
 			function handleAskAI(event) {

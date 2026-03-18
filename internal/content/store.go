@@ -2,7 +2,7 @@ package content
 
 import (
 	"database/sql"
-	_ "github.com/mattn/go-sqlite3" // SQLite driver
+	_ "modernc.org/sqlite" // Pure-Go SQLite driver (no CGO needed)
 )
 
 // Store handles content persistence using SQLite
@@ -12,7 +12,7 @@ type Store struct {
 
 // NewStore creates a new store instance from a database path
 func NewStore(dbPath string) (*Store, error) {
-	db, err := sql.Open("sqlite3", dbPath)
+	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
 		return nil, err
 	}
