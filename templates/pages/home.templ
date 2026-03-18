@@ -164,27 +164,48 @@ templ Home() {
 		@components.YearlyRetrospective()
 
 		<script>
-			function handleAskAI(event) {
+			async function handleAskAI(event) {
 				event.preventDefault();
-				const query = document.getElementById('ai-query').value;
+				const input = document.getElementById('ai-query');
+				const query = input.value.trim();
 				const responseDiv = document.getElementById('ai-response');
 				const answerDiv = document.getElementById('ai-answer');
+				const loading = document.getElementById('ai-loading');
 
-				if (!query.trim()) return;
+				if (!query) return;
 
-				// Show response area
+				// Show response area + loading
 				responseDiv.classList.remove('hidden');
+				loading.style.display = 'inline-block';
+				answerDiv.innerHTML = '';
+				input.disabled = true;
 
-				// Simulate AI response (replace with actual API call)
-				setTimeout(() => {
-					document.getElementById('ai-loading').style.display = 'none';
-					answerDiv.innerHTML = `Great question! Based on my 13+ years in DevOps, implementing GitOps at scale requires: <br><br>
-					• Establishing clear deployment patterns with ArgoCD/Flux<br>
-					• Implementing proper RBAC and multi-tenancy<br>
-					• Setting up comprehensive observability<br>
-					• Creating standardized Helm charts and templates<br><br>
-					<span class="text-accent">→ Want to dive deeper? Check out my blog posts or let's connect!</span>`;
-				}, 2000);
+				try {
+					const resp = await fetch('/api/chat', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ query: query })
+					});
+
+					const data = await resp.json();
+					loading.style.display = 'none';
+
+					if (data.error) {
+						answerDiv.innerHTML = '<span class="text-red-400">' + data.error + '</span>';
+					} else {
+						// Simple markdown-ish rendering (bold + line breaks)
+						let html = data.answer
+							.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+							.replace(/\n/g, '<br>');
+						answerDiv.innerHTML = html;
+					}
+				} catch (err) {
+					loading.style.display = 'none';
+					answerDiv.innerHTML = '<span class="text-red-400">Failed to reach AI service. Try again later.</span>';
+				} finally {
+					input.disabled = false;
+					input.focus();
+				}
 			}
 		</script>
 	}

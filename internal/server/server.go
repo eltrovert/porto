@@ -56,6 +56,9 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("POST /posts/", s.handlePostActions) // Handles both comment and like
 	mux.HandleFunc("POST /guestbook", s.handleGuestbookSubmit)
 
+	// API routes
+	mux.HandleFunc("POST /api/chat", s.handleAIChat)
+
 	// Static files
 	mux.HandleFunc("/static/", s.handleStatic)
 
