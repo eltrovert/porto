@@ -300,3 +300,208 @@ code {
   opacity: 0;
   transform: translateY(30px);
 }
+
+/* Floating animations */
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-slower {
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+/* Comet animations */
+.animate-comet {
+  animation: comet 12s linear infinite;
+}
+
+.animate-comet-reverse {
+  animation: comet-reverse 15s linear infinite;
+}
+
+.animate-comet-1 {
+  animation: cometMove1 12s linear infinite;
+}
+
+/* Shimmer animation */
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+/* Typing animation */
+.animate-typing {
+  animation: typing 3s steps(40, end), cursor 0.75s step-end infinite;
+}
+
+/* Pulse glow animation */
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+/* Orbit spin animation */
+.animate-orbit-spin {
+  animation: orbit-spin 60s linear infinite;
+}
+
+/* Card glow effect */
+.card-glow {
+  @apply relative;
+  transition: all 0.3s ease;
+}
+
+.card-glow::before {
+  content: '';
+  @apply absolute -inset-0.5 bg-gradient-to-r from-accent/20 via-purple-600/20 to-blue-600/20 rounded-lg opacity-0 blur-sm transition-opacity duration-300;
+  z-index: -1;
+}
+
+.card-glow:hover::before {
+  @apply opacity-100;
+}
+
+/* Progress bar fill */
+.progress-bar-fill {
+  @apply h-1 bg-gradient-to-r from-accent to-yellow-300 rounded-full transition-all duration-700 ease-out;
+}
+
+/* Enhanced cosmic background */
+.cosmic-bg-enhanced {
+  @apply fixed inset-0 overflow-hidden pointer-events-none;
+}
+
+/* Updated navbar glass to match React exact styling */
+.navbar-glass-exact {
+  @apply bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 rounded-none px-6 py-3 shadow-xl shadow-black/40;
+}
+
+/* Mega menu exact match */
+.mega-menu-exact {
+  @apply absolute top-full mt-2 w-[900px] bg-[#0f0f0f] border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl z-50 p-6;
+  right: -100px;
+}
+
+/* Menu card styling */
+.menu-card {
+  @apply group relative block w-full overflow-hidden border border-white/5 transition-all duration-300;
+}
+
+.menu-card img {
+  @apply w-full h-full object-cover opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 ease-out grayscale group-hover:grayscale-0;
+}
+
+.menu-card .overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent;
+}
+
+/* Scanline overlay effect */
+.scanline-overlay {
+  @apply absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none;
+  background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+}
+
+/* ======================== KEYFRAMES ======================== */
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes cursor {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #ffcf0d;
+  }
+}
+
+@keyframes comet {
+  0% {
+    stroke-dashoffset: 2100;
+  }
+  100% {
+    stroke-dashoffset: -2100;
+  }
+}
+
+@keyframes comet-reverse {
+  0% {
+    stroke-dashoffset: -2100;
+  }
+  100% {
+    stroke-dashoffset: 2100;
+  }
+}
+
+@keyframes cometMove1 {
+  0% {
+    stroke-dashoffset: 2100;
+  }
+  100% {
+    stroke-dashoffset: -2100;
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 207, 13, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(255, 207, 13, 0.6), 0 0 60px rgba(255, 207, 13, 0.3);
+  }
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

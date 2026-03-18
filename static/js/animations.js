@@ -42,7 +42,7 @@ class ScrollAnimations {
 
   observeElements() {
     // Observe elements with fade-in-up class
-    const fadeElements = document.querySelectorAll('.animate-on-scroll');
+    const fadeElements = document.querySelectorAll('.animate-on-scroll, .animate-fade-in-up, .animate-fade-in-up-delay, .animate-fade-in-up-delay-2');
     fadeElements.forEach(el => {
       el.classList.add('animate-out'); // Start hidden
       this.fadeObserver.observe(el);
@@ -52,6 +52,17 @@ class ScrollAnimations {
     const staggerContainers = document.querySelectorAll('.stagger-container');
     staggerContainers.forEach(container => {
       this.staggerObserver.observe(container);
+    });
+
+    // Observe individual stagger items if no container
+    const staggerItems = document.querySelectorAll('.stagger-item');
+    staggerItems.forEach((item, index) => {
+      if (!item.closest('.stagger-container')) {
+        item.classList.add('animate-out');
+        setTimeout(() => {
+          this.fadeObserver.observe(item);
+        }, index * 100);
+      }
     });
 
     // Observe card elements for hover prep

@@ -10,7 +10,6 @@ class PageTransitions {
   init() {
     this.setupHTMXIntegration();
     this.setupViewTransitions();
-    this.setupNavbarBehavior();
   }
 
   setupHTMXIntegration() {
@@ -142,35 +141,6 @@ class PageTransitions {
     }
   }
 
-  setupNavbarBehavior() {
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    const updateNavbar = () => {
-      const navbar = document.querySelector('nav');
-      if (!navbar) return;
-
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > 100 && currentScrollY > lastScrollY) {
-        // Scrolling down - hide navbar
-        navbar.style.transform = 'translateY(-100%)';
-      } else {
-        // Scrolling up - show navbar
-        navbar.style.transform = 'translateY(0)';
-      }
-
-      lastScrollY = currentScrollY;
-      ticking = false;
-    };
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateNavbar);
-        ticking = true;
-      }
-    }, { passive: true });
-  }
 
   addFallbackStyles() {
     const style = document.createElement('style');

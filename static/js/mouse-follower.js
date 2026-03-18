@@ -1,5 +1,5 @@
 // Mouse Follower - Accent dot + ring with lerp delay
-// Converted from React MouseFollower component
+// Converted from React MouseFollower component to match exactly
 
 class MouseFollower {
   constructor() {
@@ -11,48 +11,38 @@ class MouseFollower {
   }
 
   init() {
-    this.createElements();
+    this.getElements();
     this.bindEvents();
     this.startAnimationLoop();
   }
 
+  getElements() {
+    // Use existing elements from base.templ instead of creating new ones
+    this.dot = document.getElementById('mouse-dot');
+    this.ring_element = document.getElementById('mouse-ring');
+
+    // If elements don't exist, create them (fallback)
+    if (!this.dot || !this.ring_element) {
+      this.createElements();
+    } else {
+      // Ensure proper initial positioning
+      this.dot.style.transform = 'translate3d(-100px, -100px, 0) translate(-50%, -50%)';
+      this.ring_element.style.transform = 'translate3d(-100px, -100px, 0) translate(-50%, -50%)';
+    }
+  }
+
   createElements() {
-    // Create dot element
+    // Fallback: Create elements if they don't exist in HTML
     this.dot = document.createElement('div');
-    this.dot.className = 'mouse-follower';
-    this.dot.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 8px;
-      height: 8px;
-      background: #ffcf0d;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: difference;
-      will-change: transform;
-      transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
-    `;
+    this.dot.id = 'mouse-dot';
+    this.dot.className = 'fixed top-0 left-0 w-2 h-2 bg-accent rounded-full pointer-events-none z-[9999] mix-blend-difference will-change-transform';
+    this.dot.style.transform = 'translate3d(-100px, -100px, 0) translate(-50%, -50%)';
 
-    // Create ring element
     this.ring_element = document.createElement('div');
-    this.ring_element.className = 'mouse-ring';
-    this.ring_element.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 32px;
-      height: 32px;
-      border: 1px solid rgba(255, 207, 13, 0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      will-change: transform;
-      transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
-    `;
+    this.ring_element.id = 'mouse-ring';
+    this.ring_element.className = 'fixed top-0 left-0 w-8 h-8 border border-accent/50 rounded-full pointer-events-none z-[9998] will-change-transform';
+    this.ring_element.style.transform = 'translate3d(-100px, -100px, 0) translate(-50%, -50%)';
 
-    // Append to body
     document.body.appendChild(this.dot);
     document.body.appendChild(this.ring_element);
   }
@@ -96,12 +86,6 @@ class MouseFollower {
     window.removeEventListener('mousemove', this.handleMouseMove);
     if (this.requestId) {
       cancelAnimationFrame(this.requestId);
-    }
-    if (this.dot) {
-      document.body.removeChild(this.dot);
-    }
-    if (this.ring_element) {
-      document.body.removeChild(this.ring_element);
     }
   }
 }

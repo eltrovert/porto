@@ -41,6 +41,15 @@ templ Base(title string, activeNav string) {
 			}
 			body { background-color: #050505; }
 			.test-accent { color: #ffcf0d; }
+
+			/* Hide scrollbars but keep functionality */
+			::-webkit-scrollbar {
+				display: none;
+			}
+			* {
+				-ms-overflow-style: none;
+				scrollbar-width: none;
+			}
 		</style>
 
 		<!-- Preconnect to external fonts -->
@@ -62,12 +71,16 @@ templ Base(title string, activeNav string) {
 			}
 		</script>
 	</head>
-	<body class="cosmic-background min-h-screen text-white font-sans cursor-none">
+	<body class="min-h-screen bg-[#050505] text-gray-300 font-sans cursor-none">
 		<!-- Cosmic Background Component -->
 		@components.CosmicBackground()
 
 		<!-- Navbar -->
 		@components.Navbar(activeNav)
+
+		<!-- Mouse Follower -->
+		<div class="mouse-follower" id="mouse-dot"></div>
+		<div class="mouse-ring" id="mouse-ring"></div>
 
 		<!-- Main Content -->
 		<main class="relative z-10 w-full">
