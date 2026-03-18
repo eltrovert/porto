@@ -89,7 +89,7 @@ func RetroCard(year string, title string, subtitle string, views string, delayMs
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"#\" class=\"group relative block h-full min-h-[340px] bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden hover:border-accent/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] animate-on-scroll\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"/posts\" class=\"group relative block h-full min-h-[340px] bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden hover:border-accent/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] animate-on-scroll\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

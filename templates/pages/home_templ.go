@@ -80,11 +80,27 @@ func Home() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
+			templ_7745c5c3_Err = components.FeaturedPosts().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.Testimonials().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 			templ_7745c5c3_Err = components.YearlyRetrospective().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, " <script>\n\t\t\tfunction handleAskAI(event) {\n\t\t\t\tevent.preventDefault();\n\t\t\t\tconst query = document.getElementById('ai-query').value;\n\t\t\t\tconst responseDiv = document.getElementById('ai-response');\n\t\t\t\tconst answerDiv = document.getElementById('ai-answer');\n\n\t\t\t\tif (!query.trim()) return;\n\n\t\t\t\t// Show response area\n\t\t\t\tresponseDiv.classList.remove('hidden');\n\n\t\t\t\t// Simulate AI response (replace with actual API call)\n\t\t\t\tsetTimeout(() => {\n\t\t\t\t\tdocument.getElementById('ai-loading').style.display = 'none';\n\t\t\t\t\tanswerDiv.innerHTML = `Great question! Based on my 13+ years in DevOps, implementing GitOps at scale requires: <br><br>\n\t\t\t\t\t• Establishing clear deployment patterns with ArgoCD/Flux<br>\n\t\t\t\t\t• Implementing proper RBAC and multi-tenancy<br>\n\t\t\t\t\t• Setting up comprehensive observability<br>\n\t\t\t\t\t• Creating standardized Helm charts and templates<br><br>\n\t\t\t\t\t<span class=\"text-accent\">→ Want to dive deeper? Check out my blog posts or let's connect!</span>`;\n\t\t\t\t}, 2000);\n\t\t\t}\n\t\t</script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, " <script>\n\t\t\tfunction handleAskAI(event) {\n\t\t\t\tevent.preventDefault();\n\t\t\t\tconst query = document.getElementById('ai-query').value;\n\t\t\t\tconst responseDiv = document.getElementById('ai-response');\n\t\t\t\tconst answerDiv = document.getElementById('ai-answer');\n\n\t\t\t\tif (!query.trim()) return;\n\n\t\t\t\t// Show response area\n\t\t\t\tresponseDiv.classList.remove('hidden');\n\n\t\t\t\t// Simulate AI response (replace with actual API call)\n\t\t\t\tsetTimeout(() => {\n\t\t\t\t\tdocument.getElementById('ai-loading').style.display = 'none';\n\t\t\t\t\tanswerDiv.innerHTML = `Great question! Based on my 13+ years in DevOps, implementing GitOps at scale requires: <br><br>\n\t\t\t\t\t• Establishing clear deployment patterns with ArgoCD/Flux<br>\n\t\t\t\t\t• Implementing proper RBAC and multi-tenancy<br>\n\t\t\t\t\t• Setting up comprehensive observability<br>\n\t\t\t\t\t• Creating standardized Helm charts and templates<br><br>\n\t\t\t\t\t<span class=\"text-accent\">→ Want to dive deeper? Check out my blog posts or let's connect!</span>`;\n\t\t\t\t}, 2000);\n\t\t\t}\n\t\t</script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

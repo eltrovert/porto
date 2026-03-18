@@ -44,33 +44,46 @@ func Base(title string, activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " - El Muhammad</title><!-- SEO Meta Tags --><meta name=\"description\" content=\"Senior DevOps & Cloud Architect - Personal portfolio and blog by El Muhammad\"><meta name=\"keywords\" content=\"DevOps, Cloud Architecture, Go, Infrastructure, Portfolio\"><meta name=\"author\" content=\"El Muhammad\"><!-- Open Graph Meta Tags --><meta property=\"og:title\" content=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " - El Muhammad</title><!-- SEO Meta Tags --><meta name=\"description\" content=\"El Muhammad — Senior DevOps & Cloud Architect with 13+ years building Kubernetes clusters, CI/CD pipelines, and distributed systems at scale.\"><meta name=\"keywords\" content=\"DevOps, Cloud Architecture, Kubernetes, CI/CD, GitOps, Terraform, Go, Infrastructure as Code, MLOps, Portfolio\"><meta name=\"author\" content=\"El Muhammad\"><link rel=\"canonical\" href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(title + " - El Muhammad")
+		var templ_7745c5c3_Var3 templ.SafeURL
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs("https://eltrovert.com")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layouts/base.templ`, Line: 19, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layouts/base.templ`, Line: 17, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><meta property=\"og:description\" content=\"Senior DevOps & Cloud Architect - Personal portfolio and blog\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:url\" content=\"https://eltrovert.com\"><!-- Twitter Meta Tags --><meta name=\"twitter:card\" content=\"summary_large_image\"><meta name=\"twitter:title\" content=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><!-- Open Graph Meta Tags --><meta property=\"og:title\" content=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(title + " - El Muhammad")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layouts/base.templ`, Line: 26, Col: 63}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layouts/base.templ`, Line: 20, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><meta name=\"twitter:description\" content=\"Senior DevOps & Cloud Architect - Personal portfolio and blog\"><!-- Favicon --><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/favicon.ico\"><!-- CSS --><link rel=\"stylesheet\" href=\"/static/css/output.css?v=4\"><!-- Design test values --><style>\n\t\t\t/* Ensure required design elements are present for tests */\n\t\t\t:root {\n\t\t\t\t--accent-color: #ffcf0d;\n\t\t\t\t--dark-bg: #050505;\n\t\t\t}\n\t\t\tbody { background-color: #050505; }\n\t\t\t.test-accent { color: #ffcf0d; }\n\n\t\t\t/* Hide scrollbars but keep functionality */\n\t\t\t::-webkit-scrollbar {\n\t\t\t\tdisplay: none;\n\t\t\t}\n\t\t\t* {\n\t\t\t\t-ms-overflow-style: none;\n\t\t\t\tscrollbar-width: none;\n\t\t\t}\n\t\t</style><!-- Preconnect to external fonts --><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><!-- Google Fonts --><link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\"><!-- JavaScript Libraries --><script src=\"/static/js/htmx.min.js\"></script><!-- View Transitions API polyfill for older browsers --><script>\n\t\t\tif (!document.startViewTransition) {\n\t\t\t\tdocument.startViewTransition = function(callback) {\n\t\t\t\t\treturn { finished: Promise.resolve(callback()) };\n\t\t\t\t};\n\t\t\t}\n\t\t</script></head><body class=\"min-h-screen bg-[#050505] text-gray-300 font-sans cursor-none\"><!-- Cosmic Background Component -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\"><meta property=\"og:description\" content=\"Senior DevOps & Cloud Architect specializing in Kubernetes, CI/CD pipelines, and cloud-native infrastructure with 13+ years of experience.\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:url\" content=\"https://eltrovert.com\"><meta property=\"og:image\" content=\"/static/images/og-banner.png\"><!-- Twitter Meta Tags --><meta name=\"twitter:card\" content=\"summary_large_image\"><meta name=\"twitter:title\" content=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(title + " - El Muhammad")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layouts/base.templ`, Line: 28, Col: 63}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\"><meta name=\"twitter:description\" content=\"Senior DevOps & Cloud Architect specializing in Kubernetes, CI/CD pipelines, and cloud-native infrastructure.\"><meta name=\"twitter:image\" content=\"/static/images/og-banner.png\"><!-- Favicon --><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/favicon.ico\"><!-- CSS --><link rel=\"stylesheet\" href=\"/static/css/output.css?v=4\"><!-- Design test values --><style>\n\t\t\t/* Ensure required design elements are present for tests */\n\t\t\t:root {\n\t\t\t\t--accent-color: #ffcf0d;\n\t\t\t\t--dark-bg: #050505;\n\t\t\t}\n\t\t\tbody { background-color: #050505; }\n\t\t\t.test-accent { color: #ffcf0d; }\n\n\t\t\t/* Hide scrollbars but keep functionality */\n\t\t\t::-webkit-scrollbar {\n\t\t\t\tdisplay: none;\n\t\t\t}\n\t\t\t* {\n\t\t\t\t-ms-overflow-style: none;\n\t\t\t\tscrollbar-width: none;\n\t\t\t}\n\t\t</style><!-- Preconnect to external fonts --><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><!-- Google Fonts --><link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\"><!-- JavaScript Libraries --><script src=\"/static/js/htmx.min.js\"></script><!-- View Transitions API polyfill for older browsers --><script>\n\t\t\tif (!document.startViewTransition) {\n\t\t\t\tdocument.startViewTransition = function(callback) {\n\t\t\t\t\treturn { finished: Promise.resolve(callback()) };\n\t\t\t\t};\n\t\t\t}\n\t\t</script></head><body class=\"min-h-screen bg-[#050505] text-gray-300 font-sans cursor-none\"><!-- Cosmic Background Component -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -78,7 +91,7 @@ func Base(title string, activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<!-- Navbar -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<!-- Navbar -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -86,7 +99,7 @@ func Base(title string, activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<!-- Mouse Follower --><div class=\"mouse-follower\" id=\"mouse-dot\"></div><div class=\"mouse-ring\" id=\"mouse-ring\"></div><!-- Main Content --><main class=\"relative z-10 w-full\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<!-- Mouse Follower --><div class=\"mouse-follower\" id=\"mouse-dot\"></div><div class=\"mouse-ring\" id=\"mouse-ring\"></div><!-- Main Content --><main class=\"relative z-10 w-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -94,7 +107,7 @@ func Base(title string, activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</main><!-- Footer -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</main><!-- Footer -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -102,7 +115,7 @@ func Base(title string, activeNav string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<!-- JavaScript --><script src=\"/static/js/mouse-follower.js\"></script><script src=\"/static/js/animations.js\"></script><script src=\"/static/js/transitions.js\"></script><!-- Analytics (placeholder) --><!-- Google Analytics or other analytics scripts would go here --></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<!-- JavaScript --><script src=\"/static/js/mouse-follower.js\"></script><script src=\"/static/js/animations.js\"></script><script src=\"/static/js/transitions.js\"></script><!-- Analytics (placeholder) --><!-- Google Analytics or other analytics scripts would go here --></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

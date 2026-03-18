@@ -89,7 +89,7 @@ func PostCard(category string, title string, subtitle string, visual templ.Compo
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"#\" class=\"group relative bg-[#0a0a0a] border border-white/5 rounded-none overflow-hidden hover:border-accent/30 transition-all duration-500 flex flex-col h-full hover:shadow-[0_0_30px_rgba(255,207,13,0.05)] hover:-translate-y-1 animate-on-scroll\" style=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"/posts\" class=\"group relative bg-[#0a0a0a] border border-white/5 rounded-none overflow-hidden hover:border-accent/30 transition-all duration-500 flex flex-col h-full hover:shadow-[0_0_30px_rgba(255,207,13,0.05)] hover:-translate-y-1 animate-on-scroll\" style=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

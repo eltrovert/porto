@@ -1,6 +1,7 @@
 package server
 
 import (
+	"html"
 	"net/http"
 	"strings"
 
@@ -385,9 +386,11 @@ func (s *Server) handleRSS(w http.ResponseWriter, r *http.Request) {
 	for _, post := range posts {
 		rss += `
     <item>
-      <title>` + post.Title + `</title>
-      <description>` + post.Description + `</description>
+      <title>` + html.EscapeString(post.Title) + `</title>
+      <description>` + html.EscapeString(post.Description) + `</description>
       <link>https://eltrovert.com/posts/` + post.Slug + `</link>
+      <guid>https://eltrovert.com/posts/` + post.Slug + `</guid>
+      <pubDate>` + post.PublishedAt.Format("Mon, 02 Jan 2006 15:04:05 -0700") + `</pubDate>
     </item>`
 	}
 
@@ -404,28 +407,32 @@ func (s *Server) handleSitemap(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/xml")
 
+	staticDate := "2026-01-01"
+
 	sitemap := `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://eltrovert.com/</loc></url>
-  <url><loc>https://eltrovert.com/about</loc></url>
-  <url><loc>https://eltrovert.com/posts</loc></url>
-  <url><loc>https://eltrovert.com/projects</loc></url>
-  <url><loc>https://eltrovert.com/talks</loc></url>
-  <url><loc>https://eltrovert.com/uses</loc></url>
-  <url><loc>https://eltrovert.com/books</loc></url>
-  <url><loc>https://eltrovert.com/life</loc></url>
-  <url><loc>https://eltrovert.com/notes</loc></url>
-  <url><loc>https://eltrovert.com/guestbook</loc></url>
-  <url><loc>https://eltrovert.com/kudos</loc></url>`
+  <url><loc>https://eltrovert.com/</loc><lastmod>` + staticDate + `</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://eltrovert.com/about</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://eltrovert.com/posts</loc><lastmod>` + staticDate + `</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://eltrovert.com/projects</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://eltrovert.com/talks</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://eltrovert.com/uses</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://eltrovert.com/books</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://eltrovert.com/life</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://eltrovert.com/notes</loc><lastmod>` + staticDate + `</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://eltrovert.com/guestbook</loc><lastmod>` + staticDate + `</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://eltrovert.com/kudos</loc><lastmod>` + staticDate + `</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>`
 
 	for _, post := range posts {
+		postDate := post.PublishedAt.Format("2006-01-02")
 		sitemap += `
-  <url><loc>https://eltrovert.com/posts/` + post.Slug + `</loc></url>`
+  <url><loc>https://eltrovert.com/posts/` + post.Slug + `</loc><lastmod>` + postDate + `</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`
 	}
 
 	for _, project := range projects {
+		projectDate := project.CreatedAt.Format("2006-01-02")
 		sitemap += `
-  <url><loc>https://eltrovert.com/projects/` + project.Slug + `</loc></url>`
+  <url><loc>https://eltrovert.com/projects/` + project.Slug + `</loc><lastmod>` + projectDate + `</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`
 	}
 
 	sitemap += `
@@ -557,18 +564,28 @@ func (s *Server) handlePostComment(w http.ResponseWriter, r *http.Request) {
 
 	// Parse form data
 	r.ParseForm()
-	authorName := r.FormValue("author_name")
-	content := r.FormValue("content")
+	authorName := r.FormValue("author")
+	commentContent := r.FormValue("content")
 
-	if authorName == "" || content == "" {
+	if authorName == "" || commentContent == "" {
 		http.Error(w, "Missing required fields", http.StatusBadRequest)
 		return
 	}
 
-	// In a real implementation, we'd save the comment to the database
-	// For now, just return success
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Comment added"))
+	// Save comment to database
+	comment := &content.Comment{
+		PostID:     post.ID,
+		AuthorName: authorName,
+		Content:    commentContent,
+	}
+	err = s.store.CreateComment(comment)
+	if err != nil {
+		http.Error(w, "Failed to save comment", http.StatusInternalServerError)
+		return
+	}
+
+	// Redirect back to the post
+	http.Redirect(w, r, "/posts/"+slug, http.StatusSeeOther)
 }
 
 func (s *Server) handlePostLike(w http.ResponseWriter, r *http.Request) {
@@ -586,10 +603,15 @@ func (s *Server) handlePostLike(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// In a real implementation, we'd increment the like count
-	// For now, just return success
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Like added"))
+	// Increment the like count
+	err = s.store.IncrementPostLikes(slug)
+	if err != nil {
+		http.Error(w, "Failed to like post", http.StatusInternalServerError)
+		return
+	}
+
+	// Redirect back to the post
+	http.Redirect(w, r, "/posts/"+slug, http.StatusSeeOther)
 }
 
 func (s *Server) handleGuestbookSubmit(w http.ResponseWriter, r *http.Request) {
@@ -608,8 +630,17 @@ func (s *Server) handleGuestbookSubmit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// In a real implementation, we'd save to the database
-	// For now, just return success
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Guestbook entry added"))
+	// Save to database
+	entry := &content.GuestEntry{
+		Name:    name,
+		Message: message,
+	}
+	err := s.store.CreateGuestEntry(entry)
+	if err != nil {
+		http.Error(w, "Failed to save guestbook entry", http.StatusInternalServerError)
+		return
+	}
+
+	// Redirect back to guestbook with success
+	http.Redirect(w, r, "/guestbook?success=1", http.StatusSeeOther)
 }

@@ -242,8 +242,8 @@
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .animate-on-scroll.animate-out {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(30px);
 }
 .animate-on-scroll.animate-in {
   opacity: 1;
