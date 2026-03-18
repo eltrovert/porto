@@ -94,10 +94,11 @@ func (s *Server) handleAIChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get API key from env or fallback
+	// Get API key from env (required)
 	apiKey := os.Getenv("GEMINI_API_KEY")
 	if apiKey == "" {
-		apiKey = "AIzaSyBpnC6IZqiuPrywhAD4z1EbjqX2TDzjsYU"
+		writeJSON(w, http.StatusServiceUnavailable, chatResponse{Error: "AI service not configured"})
+		return
 	}
 
 	// Build Gemini request
