@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS projects (
     is_featured BOOLEAN DEFAULT FALSE,
     is_archival BOOLEAN DEFAULT FALSE,
     sort_order INTEGER DEFAULT 0,
+    year INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -291,13 +292,13 @@ FROM posts WHERE topic = ? ORDER BY published_at DESC LIMIT ? OFFSET ?
 // CreateProject creates a new project in the database
 func (s *Store) CreateProject(project *Project) error {
 	query := `
-INSERT INTO projects (slug, title, description, content_md, content_html, tools, cover_image, repo_link, demo_link, is_featured, is_archival, sort_order)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO projects (slug, title, description, content_md, content_html, tools, cover_image, repo_link, demo_link, is_featured, is_archival, sort_order, year)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 	result, err := s.db.Exec(query,
 		project.Slug, project.Title, project.Description, project.ContentMD, project.ContentHTML,
 		project.Tools, project.CoverImage, project.RepoLink, project.DemoLink,
-		project.IsFeatured, project.IsArchival, project.SortOrder)
+		project.IsFeatured, project.IsArchival, project.SortOrder, project.Year)
 	if err != nil {
 		return err
 	}
@@ -315,13 +316,13 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 func (s *Store) GetProjectBySlug(slug string) (*Project, error) {
 	project := &Project{}
 	query := `
-SELECT id, slug, title, description, content_md, content_html, tools, cover_image, repo_link, demo_link, is_featured, is_archival, sort_order, created_at
+SELECT id, slug, title, description, content_md, content_html, tools, cover_image, repo_link, demo_link, is_featured, is_archival, sort_order, COALESCE(year,0), created_at
 FROM projects WHERE slug = ?
 `
 	err := s.db.QueryRow(query, slug).Scan(
 		&project.ID, &project.Slug, &project.Title, &project.Description, &project.ContentMD, &project.ContentHTML,
 		&project.Tools, &project.CoverImage, &project.RepoLink, &project.DemoLink,
-		&project.IsFeatured, &project.IsArchival, &project.SortOrder, &project.CreatedAt)
+		&project.IsFeatured, &project.IsArchival, &project.SortOrder, &project.Year, &project.CreatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
@@ -334,8 +335,8 @@ FROM projects WHERE slug = ?
 // ListProjects returns a list of projects
 func (s *Store) ListProjects() ([]*Project, error) {
 	query := `
-SELECT id, slug, title, description, content_md, content_html, tools, cover_image, repo_link, demo_link, is_featured, is_archival, sort_order, created_at
-FROM projects ORDER BY sort_order ASC, created_at DESC
+SELECT id, slug, title, description, content_md, content_html, tools, cover_image, repo_link, demo_link, is_featured, is_archival, sort_order, COALESCE(year,0), created_at
+FROM projects ORDER BY year DESC, sort_order ASC, created_at DESC
 `
 	rows, err := s.db.Query(query)
 	if err != nil {
@@ -349,7 +350,7 @@ FROM projects ORDER BY sort_order ASC, created_at DESC
 		err := rows.Scan(
 			&project.ID, &project.Slug, &project.Title, &project.Description, &project.ContentMD, &project.ContentHTML,
 			&project.Tools, &project.CoverImage, &project.RepoLink, &project.DemoLink,
-			&project.IsFeatured, &project.IsArchival, &project.SortOrder, &project.CreatedAt)
+			&project.IsFeatured, &project.IsArchival, &project.SortOrder, &project.Year, &project.CreatedAt)
 		if err != nil {
 			return nil, err
 		}

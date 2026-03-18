@@ -38,6 +38,7 @@ type Project struct {
 	IsFeatured  bool      `json:"is_featured" db:"is_featured"`
 	IsArchival  bool      `json:"is_archival" db:"is_archival"`
 	SortOrder   int       `json:"sort_order" db:"sort_order"`
+	Year        int       `json:"year" db:"year"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 }
 
