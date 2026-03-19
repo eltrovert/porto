@@ -3,6 +3,8 @@
 bin/
 data/
 node_modules/
+web/dist/
+web/node_modules/
 static/css/out.css
 *.db
 porto
